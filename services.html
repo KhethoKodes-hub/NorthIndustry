@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>North Industry · Services | Premium Pastries & Event Decor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --navy:   #0b1f3a;
+      --dark:   #0d2d5e;
+      --mid:    #1a4a8a;
+      --accent: #3b82f6;
+      --sky:    #60a5fa;
+      --pale:   #dbeafe;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #eef4fd;
+      color: #1a2e4a;
+      overflow-x: hidden;
+    }
+    h1,h2,h3,.serif { font-family: 'Playfair Display', serif; }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #eef4fd; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg,#3b82f6,#0b1f3a); border-radius: 3px; }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top:0; left:0; right:0; z-index:100;
+      background: rgba(11,31,58,0.72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      transition: background 0.3s;
+    }
+    .nav-link {
+      color: rgba(255,255,255,0.75); font-size:0.80rem;
+      letter-spacing:0.08em; text-transform:uppercase; font-weight:500;
+      padding:0.25rem 0.4rem; transition:color 0.2s; position:relative;
+    }
+    .nav-link::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:1px; background:#60a5fa; transition:width 0.25s; }
+    .nav-link:hover { color:#fff; }
+    .nav-link:hover::after { width:100%; }
+    .nav-link.active { color:#60a5fa; }
+    .nav-link.active::after { width:100%; }
+
+    /* ── HERO BG ── */
+    .hero-services {
+      background-image:
+        linear-gradient(155deg, rgba(11,31,58,0.90) 0%, rgba(26,74,138,0.78) 50%, rgba(96,165,250,0.52) 100%),
+        url('https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=1400&q=80&fit=crop');
+      background-size: cover; background-position: center; background-attachment: fixed;
+    }
+
+    /* ── GLASS ── */
+    .glass { background:rgba(255,255,255,0.13); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,0.25); box-shadow:0 8px 32px rgba(11,31,58,0.25); }
+    .glass-white { background:rgba(255,255,255,0.72); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.55); box-shadow:0 10px 40px rgba(11,31,58,0.12); }
+    .glass-card { background:rgba(255,255,255,0.62); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border:1px solid rgba(255,255,255,0.48); box-shadow:0 10px 40px rgba(11,31,58,0.13); transition:transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s, background 0.25s; }
+    .glass-card:hover { transform:translateY(-7px) scale(1.012); background:rgba(255,255,255,0.85); box-shadow:0 22px 55px rgba(11,31,58,0.20); }
+
+    /* ── GRADIENT TEXT ── */
+    .grad-white { background:linear-gradient(120deg,#fff 0%,#bfdbfe 55%,#60a5fa 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .grad-dark  { background:linear-gradient(120deg,#0b1f3a 0%,#1a4a8a 60%,#3b82f6 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+    /* ── LINE ACCENT ── */
+    .line-div { width:68px; height:3px; background:linear-gradient(90deg,#3b82f6,#60a5fa,#bfdbfe); border-radius:2px; }
+
+    /* ── PILL ── */
+    .pill { display:inline-flex; align-items:center; gap:6px; background:rgba(59,130,246,0.16); border:1px solid rgba(96,165,250,0.32); border-radius:40px; padding:0.32rem 0.95rem; font-size:0.76rem; letter-spacing:0.06em; text-transform:uppercase; color:#bfdbfe; font-weight:600; }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.7s ease, transform 0.7s cubic-bezier(.22,1,.36,1); }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .reveal-l { opacity:0; transform:translateX(-30px); transition:opacity 0.7s ease, transform 0.7s cubic-bezier(.22,1,.36,1); }
+    .reveal-l.visible { opacity:1; transform:translateX(0); }
+    .reveal-r { opacity:0; transform:translateX(30px); transition:opacity 0.7s ease, transform 0.7s cubic-bezier(.22,1,.36,1); }
+    .reveal-r.visible { opacity:1; transform:translateX(0); }
+    .stagger > * { opacity:0; transform:translateY(22px); transition:opacity 0.5s ease, transform 0.5s cubic-bezier(.22,1,.36,1); }
+    .stagger.visible > *:nth-child(1){ opacity:1;transform:translateY(0);transition-delay:.05s; }
+    .stagger.visible > *:nth-child(2){ opacity:1;transform:translateY(0);transition-delay:.13s; }
+    .stagger.visible > *:nth-child(3){ opacity:1;transform:translateY(0);transition-delay:.21s; }
+    .stagger.visible > *:nth-child(4){ opacity:1;transform:translateY(0);transition-delay:.29s; }
+    .stagger.visible > *:nth-child(5){ opacity:1;transform:translateY(0);transition-delay:.37s; }
+
+    /* ── ICON BOX ── */
+    .icon-box { display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#1a4a8a,#3b82f6); box-shadow:0 6px 18px rgba(59,130,246,0.35); flex-shrink:0; transition:transform 0.2s, box-shadow 0.2s; }
+    .glass-card:hover .icon-box { transform:rotate(-6deg) scale(1.1); box-shadow:0 10px 26px rgba(59,130,246,0.55); }
+
+    /* ── SERVICE MINI CARD ── */
+    .mini-card { background:rgba(255,255,255,0.45); border:1px solid rgba(255,255,255,0.55); border-radius:1rem; padding:1rem 1.1rem; transition:background 0.25s, transform 0.25s; }
+    .mini-card:hover { background:rgba(255,255,255,0.82); transform:translateY(-3px); }
+    .mini-card:hover .mini-icon { transform:rotate(-8deg) scale(1.15); }
+    .mini-icon { transition: transform 0.25s; }
+
+    /* ── SERVICE TAG ── */
+    .stag { display:inline-flex; align-items:center; gap:5px; background:rgba(255,255,255,0.55); border:1px solid rgba(255,255,255,0.55); border-radius:50px; padding:0.38rem 0.9rem; font-size:0.80rem; font-weight:500; transition:background 0.2s, transform 0.2s; }
+    .stag:hover { background:#fff; transform:scale(1.04); }
+
+    /* ── BUTTONS ── */
+    .btn-pry { display:inline-flex; align-items:center; gap:8px; background:linear-gradient(120deg,#1a4a8a,#3b82f6); color:#fff; padding:0.85rem 2rem; border-radius:50px; font-size:0.88rem; font-weight:600; letter-spacing:0.02em; box-shadow:0 6px 22px rgba(59,130,246,0.38); transition:transform 0.2s, box-shadow 0.2s, filter 0.2s; text-decoration:none; cursor:pointer; border:none; }
+    .btn-pry:hover { transform:translateY(-3px); box-shadow:0 12px 30px rgba(59,130,246,0.52); filter:brightness(1.08); }
+    .btn-ghost { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.10); color:#fff; padding:0.85rem 2rem; border-radius:50px; font-size:0.88rem; font-weight:500; border:1px solid rgba(255,255,255,0.28); transition:background 0.2s, transform 0.2s; text-decoration:none; cursor:pointer; }
+    .btn-ghost:hover { background:rgba(255,255,255,0.20); transform:translateY(-3px); }
+
+    /* ── STAT TILE ── */
+    .stat-tile { background:rgba(255,255,255,0.10); border:1px solid rgba(255,255,255,0.18); border-radius:1.2rem; padding:1.2rem; text-align:center; transition:background 0.25s, transform 0.25s; }
+    .stat-tile:hover { background:rgba(255,255,255,0.18); transform:translateY(-4px); }
+
+    /* ── DARK BG SECTIONS ── */
+    .pastry-bg {
+      background-image: linear-gradient(150deg,rgba(11,31,58,0.88) 0%,rgba(26,74,138,0.78) 100%),
+        url('https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=1200&q=80&fit=crop');
+      background-size:cover; background-position:center;
+    }
+    .decor-bg {
+      background-image: linear-gradient(150deg,rgba(11,31,58,0.88) 0%,rgba(59,130,246,0.65) 100%),
+        url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1200&q=80&fit=crop');
+      background-size:cover; background-position:center;
+    }
+    .synergy-bg {
+      background-image: linear-gradient(155deg,rgba(11,31,58,0.92) 0%,rgba(26,74,138,0.85) 100%),
+        url('https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=1200&q=80&fit=crop');
+      background-size:cover; background-position:center;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    .noise::before { content:''; position:absolute; inset:0; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E"); pointer-events:none; z-index:0; }
+
+    /* ── PARTICLES ── */
+    .particle { position:absolute; border-radius:50%; background:rgba(96,165,250,0.65); animation:floatP 7s ease-in-out infinite; }
+    @keyframes floatP { 0%,100%{transform:translateY(0) scale(1);opacity:.5;} 50%{transform:translateY(-18px) scale(1.3);opacity:1;} }
+    .hero-ring { position:absolute; border-radius:50%; border:1px solid rgba(96,165,250,0.18); animation:pulseR 5s ease-in-out infinite; }
+    @keyframes pulseR { 0%,100%{transform:scale(1);opacity:.35;} 50%{transform:scale(1.05);opacity:.7;} }
+
+    /* ── SECTION PAD ── */
+    .section { padding:5.5rem 1.5rem; }
+    @media(max-width:768px){ .section { padding:4rem 1rem; } }
+
+    /* ── NUMBER STEPS ── */
+    .step-num { font-family:'Playfair Display',serif; font-size:4.5rem; font-weight:900; line-height:1; color:rgba(59,130,246,0.12); position:absolute; top:-10px; right:16px; pointer-events:none; user-select:none; }
+
+    /* ── WAVY ── */
+    .wavy { line-height:0; overflow:hidden; }
+
+    /* ── MOBILE MENU ── */
+    #mob-menu { display:none; }
+    #mob-menu.open { display:flex; }
+
+    /* ── CONTACT HIGHLIGHT ── */
+    .contact-glow { box-shadow: 0 0 0 1px rgba(96,165,250,0.3), 0 20px 50px rgba(11,31,58,0.25); }
+
+    /* ── INFO ROW ── */
+    .info-row { display:flex; align-items:center; gap:10px; padding:0.6rem 0; border-bottom:1px solid rgba(11,31,58,0.07); font-size:0.875rem; }
+    .info-row:last-child { border-bottom:none; }
+  </style>
+</head>
+<body>
+
+
+<nav class="py-3 px-4 sm:px-8">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-3">
+      <div class="icon-box w-9 h-9 rounded-xl"><i class="fa-solid fa-cake-candles text-white text-sm"></i></div>
+      <span class="serif text-white font-bold text-lg tracking-tight">North Industry</span>
+    </a>
+    <div class="hidden md:flex items-center gap-6">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="services.html" class="nav-link active">Services</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+      <a href="tel:0793518160" class="btn-pry py-2 px-5 text-sm"><i class="fa-solid fa-phone text-xs"></i> Call Us</a>
+    </div>
+    <button class="md:hidden text-white/80 hover:text-white p-2" onclick="toggleMenu()">
+      <i class="fa-solid fa-bars text-xl" id="micon"></i>
+    </button>
+  </div>
+  <div id="mob-menu" class="md:hidden flex-col gap-1 pt-3 pb-2 px-2 border-t border-white/10 mt-2">
+    <a href="index.html" class="block nav-link py-2">Home</a>
+    <a href="about.html" class="block nav-link py-2">About</a>
+    <a href="#pastries" class="block nav-link py-2 active" onclick="toggleMenu()">Services</a>
+    <a href="#excellence" class="block nav-link py-2" onclick="toggleMenu()">Why Us</a>
+    <a href="#synergy" class="block nav-link py-2" onclick="toggleMenu()">Full Service</a>
+    <a href="tel:0793518160" class="btn-pry mt-3 text-sm w-full justify-center"><i class="fa-solid fa-phone text-xs"></i> 079 351 8160</a>
+  </div>
+</nav>
+
+
+
+<section class="hero-services noise relative min-h-screen flex items-center justify-center" style="padding:7rem 1.5rem 5rem;">
+  <div class="hero-ring" style="width:500px;height:500px;left:calc(50% - 250px);top:calc(50% - 250px);"></div>
+  <div class="hero-ring" style="width:820px;height:820px;left:calc(50% - 410px);top:calc(50% - 410px);animation-delay:1.8s;opacity:.18;"></div>
+  <div class="particle" style="width:5px;height:5px;top:20%;left:10%;animation-delay:0s;"></div>
+  <div class="particle" style="width:7px;height:7px;top:68%;left:7%;animation-delay:1.4s;"></div>
+  <div class="particle" style="width:5px;height:5px;top:25%;right:11%;animation-delay:2.6s;"></div>
+  <div class="particle" style="width:8px;height:8px;top:74%;right:9%;animation-delay:0.8s;"></div>
+
+  <div class="relative z-10 max-w-5xl mx-auto text-center px-4">
+    <div class="pill mb-6 reveal" style="transition-delay:.1s;">
+      <span class="w-2 h-2 rounded-full bg-sky-400 inline-block animate-pulse"></span>
+      What We Offer · North Industry
+    </div>
+    <h1 class="reveal serif font-black leading-none mb-5" style="font-size:clamp(3rem,9vw,6.5rem);transition-delay:.2s;">
+      <span class="text-white block">Our</span>
+      <span class="grad-white block italic" style="font-size:clamp(2.6rem,8vw,6rem);">Services</span>
+    </h1>
+    <p class="reveal text-blue-100/85 text-lg sm:text-xl max-w-2xl mx-auto font-light leading-relaxed mb-10" style="transition-delay:.35s;">
+      From handcrafted pâtisserie to immersive event styling — we deliver excellence in every single detail.
+    </p>
+    <div class="reveal flex flex-col sm:flex-row gap-4 justify-center" style="transition-delay:.5s;">
+      <a href="#pastries" class="btn-pry text-base px-8">Explore Services <i class="fa-solid fa-arrow-down text-xs"></i></a>
+      <a href="tel:0793518160" class="btn-ghost text-base px-8"><i class="fa-solid fa-phone text-xs"></i> Get a Quote</a>
+    </div>
+
+    <!-- hero service chips -->
+    <div class="reveal mt-14 flex flex-wrap justify-center gap-3" style="transition-delay:.65s;">
+      <span class="glass rounded-full px-5 py-2 text-white/90 text-sm flex items-center gap-2">
+        <i class="fa-solid fa-cake-candles text-sky-400 text-xs"></i> Custom Cakes
+      </span>
+      <span class="glass rounded-full px-5 py-2 text-white/90 text-sm flex items-center gap-2">
+        <i class="fa-solid fa-star text-sky-400 text-xs"></i> Artisan Desserts
+      </span>
+      <span class="glass rounded-full px-5 py-2 text-white/90 text-sm flex items-center gap-2">
+        <i class="fa-solid fa-wand-magic-sparkles text-sky-400 text-xs"></i> Event Decoration
+      </span>
+      <span class="glass rounded-full px-5 py-2 text-white/90 text-sm flex items-center gap-2">
+        <i class="fa-solid fa-table text-sky-400 text-xs"></i> Dessert Styling
+      </span>
+      <span class="glass rounded-full px-5 py-2 text-white/90 text-sm flex items-center gap-2">
+        <i class="fa-solid fa-briefcase text-sky-400 text-xs"></i> Corporate Decor
+      </span>
+    </div>
+  </div>
+</section>
+
+<div class="wavy" style="background:#eef4fd;">
+  <svg viewBox="0 0 1200 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;height:60px;">
+    <path d="M0,30 C300,60 900,0 1200,30 L1200,60 L0,60 Z" fill="#eef4fd"/>
+    <path d="M0,30 C300,60 900,0 1200,30" fill="none" stroke="rgba(59,130,246,0.13)" stroke-width="2"/>
+  </svg>
+</div>
+
+
+<!-- ═══════════════════════════
+     PREMIUM PASTRIES
+═══════════════════════════ -->
+<section class="pastry-bg noise relative section" id="pastries">
+  <div class="relative z-10 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+      <!-- left: heading + description -->
+      <div class="reveal-l">
+        <div class="line-div mb-5"></div>
+        <div class="flex items-center gap-4 mb-4">
+          <div class="icon-box w-16 h-16 rounded-2xl" style="background:linear-gradient(135deg,rgba(255,255,255,0.15),rgba(255,255,255,0.08));border:1px solid rgba(255,255,255,0.25);box-shadow:none;">
+            <i class="fa-solid fa-cake-candles text-white text-2xl"></i>
+          </div>
+          <div>
+            <p class="text-blue-300/70 text-xs uppercase tracking-widest font-bold">Service 01</p>
+            <h2 class="serif text-4xl sm:text-5xl font-black text-white leading-tight">Premium<br>Pastries</h2>
+          </div>
+        </div>
+        <p class="text-blue-100/85 text-lg leading-relaxed mb-6 border-l-4 border-blue-400/60 pl-5 italic">
+          Indulge in artistry and flavour — each creation reflects our passion for quality, freshness, and exquisite presentation.
+        </p>
+        <div class="flex flex-wrap gap-3 mb-8">
+          <span class="stag"><i class="fa-regular fa-circle-check text-blue-500 text-xs"></i> Custom Cakes</span>
+          <span class="stag"><i class="fa-regular fa-circle-check text-blue-500 text-xs"></i> Artisan Desserts</span>
+          <span class="stag"><i class="fa-regular fa-circle-check text-blue-500 text-xs"></i> Event Pastries</span>
+          <span class="stag"><i class="fa-regular fa-circle-check text-blue-500 text-xs"></i> Special Occasions</span>
+          <span class="stag"><i class="fa-regular fa-circle-check text-blue-500 text-xs"></i> Themed Creations</span>
+        </div>
+        <a href="tel:0793518160" class="btn-pry">Order Now <i class="fa-solid fa-arrow-right text-xs"></i></a>
+      </div>
+
+      <!-- right: service mini-cards grid -->
+      <div class="reveal-r">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 stagger">
+
+          <div class="mini-card relative overflow-hidden">
+            <span class="step-num">01</span>
+            <div class="icon-box w-10 h-10 rounded-xl mini-icon mb-3"><i class="fa-solid fa-crown text-white text-sm"></i></div>
+            <h3 class="font-bold text-sky-900 text-sm mb-1">Custom Cakes</h3>
+            <p class="text-xs text-gray-600 leading-relaxed">Tailored for weddings, birthdays, and corporate milestones — design your dream cake with us.</p>
+          </div>
+
+          <div class="mini-card relative overflow-hidden">
+            <span class="step-num">02</span>
+            <div class="icon-box w-10 h-10 rounded-xl mini-icon mb-3"><i class="fa-solid fa-star text-white text-sm"></i></div>
+            <h3 class="font-bold text-sky-900 text-sm mb-1">Artisan Desserts</h3>
+            <p class="text-xs text-gray-600 leading-relaxed">Tarts, entremets, and modern sweets crafted with the finest premium ingredients.</p>
+          </div>
+
+          <div class="mini-card relative overflow-hidden">
+            <span class="step-num">03</span>
+            <div class="icon-box w-10 h-10 rounded-xl mini-icon mb-3"><i class="fa-solid fa-calendar-check text-white text-sm"></i></div>
+            <h3 class="font-bold text-sky-900 text-sm mb-1">Event Pastries</h3>
+            <p class="text-xs text-gray-600 leading-relaxed">Mini desserts, pastry towers, and bite-size treats for galas and celebrations.</p>
+          </div>
+
+          <div class="mini-card relative overflow-hidden">
+            <span class="step-num">04</span>
+            <div class="icon-box w-10 h-10 rounded-xl mini-icon mb-3"><i class="fa-solid fa-gift text-white text-sm"></i></div>
+            <h3 class="font-bold text-sky-900 text-sm mb-1">Special Occasions</h3>
+            <p class="text-xs text-gray-600 leading-relaxed">Easter, Christmas, Valentine's — seasonal delights wrapped with thoughtful care.</p>
+          </div>
+
+          <div class="mini-card relative overflow-hidden sm:col-span-2">
+            <span class="step-num">05</span>
+            <div class="icon-box w-10 h-10 rounded-xl mini-icon mb-3"><i class="fa-solid fa-palette text-white text-sm"></i></div>
+            <h3 class="font-bold text-sky-900 text-sm mb-1">Themed Baked Creations</h3>
+            <p class="text-xs text-gray-600 leading-relaxed">Custom shapes, branded cookies, and fantasy cakes crafted for any immersive theme or brand identity.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- wavy between sections -->
+<div class="wavy" style="background:#eef4fd;">
+  <svg viewBox="0 0 1200 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;height:60px;transform:scaleX(-1);">
+    <path d="M0,30 C300,60 900,0 1200,30 L1200,60 L0,60 Z" fill="#eef4fd"/>
+    <path d="M0,30 C300,60 900,0 1200,30" fill="none" stroke="rgba(59,130,246,0.13)" stroke-width="2"/>
+  </svg>
+</div>
+
+
+<!-- ═══════════════════════════
+     DECORATIVE SERVICES
+═══════════════════════════ -->
+<section class="decor-bg noise relative section" id="decor">
+  <div class="relative z-10 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+      <!-- left: service mini-cards (reversed layout) -->
+      <div class="reveal-l order-2 lg:order-1">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 stagger">
+
+          <div class="mini-card relative overflow-hidden">
+            <span class="step-num">01</span>
+            <div class="icon-box w-10 h-10 rounded-xl mini-icon mb-3"><i class="fa-solid fa-champagne-glasses text-white text-sm"></i></div>
+            <h3 class="font-bold text-sky-900 text-sm mb-1">Event Decoration</h3>
+            <p class="text-xs text-gray-600 leading-relaxed">Full ambiance design — backdrops, lighting concepts, floral, and props.</p>
+          </div>
+
+          <div class="mini-card relative overflow-hidden">
+            <span class="step-num">02</span>
+            <div class="icon-box w-10 h-10 rounded-xl mini-icon mb-3"><i class="fa-solid fa-table text-white text-sm"></i></div>
+            <h3 class="font-bold text-sky-900 text-sm mb-1">Dessert Table Styling</h3>
+            <p class="text-xs text-gray-600 leading-relaxed">Curated displays, stands, linens, and signage to showcase your sweets beautifully.</p>
+          </div>
+
+          <div class="mini-card relative overflow-hidden">
+            <span class="step-num">03</span>
+            <div class="icon-box w-10 h-10 rounded-xl mini-icon mb-3"><i class="fa-solid fa-hat-wizard text-white text-sm"></i></div>
+            <h3 class="font-bold text-sky-900 text-sm mb-1">Themed Party Setups</h3>
+            <p class="text-xs text-gray-600 leading-relaxed">From fairy tales to corporate brands — we build fully immersive environments.</p>
+          </div>
+
+          <div class="mini-card relative overflow-hidden">
+            <span class="step-num">04</span>
+            <div class="icon-box w-10 h-10 rounded-xl mini-icon mb-3"><i class="fa-solid fa-briefcase text-white text-sm"></i></div>
+            <h3 class="font-bold text-sky-900 text-sm mb-1">Corporate Event Decor</h3>
+            <p class="text-xs text-gray-600 leading-relaxed">Elegant gala dinners, product launches, and meeting setups with refined styling.</p>
+          </div>
+
+          <div class="mini-card relative overflow-hidden sm:col-span-2">
+            <span class="step-num">05</span>
+            <div class="icon-box w-10 h-10 rounded-xl mini-icon mb-3"><i class="fa-solid fa-compass-drafting text-white text-sm"></i></div>
+            <h3 class="font-bold text-sky-900 text-sm mb-1">Custom Design Concepts</h3>
+            <p class="text-xs text-gray-600 leading-relaxed">We collaborate closely to create unique visual identities tailored to your celebration or brand.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- right: heading + description -->
+      <div class="reveal-r order-1 lg:order-2">
+        <div class="line-div mb-5"></div>
+        <div class="flex items-center gap-4 mb-4">
+          <div class="icon-box w-16 h-16 rounded-2xl" style="background:linear-gradient(135deg,rgba(255,255,255,0.15),rgba(255,255,255,0.08));border:1px solid rgba(255,255,255,0.25);box-shadow:none;">
+            <i class="fa-solid fa-wand-magic-sparkles text-white text-2xl"></i>
+          </div>
+          <div>
+            <p class="text-blue-300/70 text-xs uppercase tracking-widest font-bold">Service 02</p>
+            <h2 class="serif text-4xl sm:text-5xl font-black text-white leading-tight">Decorative<br>Services</h2>
+          </div>
+        </div>
+        <p class="text-blue-100/85 text-lg leading-relaxed mb-6 border-l-4 border-blue-400/60 pl-5 italic">
+          We transform spaces into stories — elegant, immersive decor that leaves a truly lasting impression.
+        </p>
+        <div class="flex flex-wrap gap-3 mb-8">
+          <span class="stag"><i class="fa-regular fa-circle-check text-blue-500 text-xs"></i> Event Decoration</span>
+          <span class="stag"><i class="fa-regular fa-circle-check text-blue-500 text-xs"></i> Dessert Styling</span>
+          <span class="stag"><i class="fa-regular fa-circle-check text-blue-500 text-xs"></i> Themed Setups</span>
+          <span class="stag"><i class="fa-regular fa-circle-check text-blue-500 text-xs"></i> Corporate Decor</span>
+          <span class="stag"><i class="fa-regular fa-circle-check text-blue-500 text-xs"></i> Custom Concepts</span>
+        </div>
+        <a href="tel:0793518160" class="btn-pry">Book a Consultation <i class="fa-solid fa-arrow-right text-xs"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wavy" style="background:#eef4fd;">
+  <svg viewBox="0 0 1200 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;height:60px;">
+    <path d="M0,30 C300,60 900,0 1200,30 L1200,60 L0,60 Z" fill="#eef4fd"/>
+    <path d="M0,30 C300,60 900,0 1200,30" fill="none" stroke="rgba(59,130,246,0.13)" stroke-width="2"/>
+  </svg>
+</div>
+
+
+<!-- ═══════════════════════════
+     EXCELLENCE / WHY US
+═══════════════════════════ -->
+<section class="section max-w-7xl mx-auto" id="excellence" style="background:transparent;">
+  <div class="text-center mb-12 reveal">
+    <div class="line-div mx-auto mb-5"></div>
+    <h2 class="serif text-4xl sm:text-5xl font-black grad-dark mb-4">Excellence in Every Service</h2>
+    <p class="text-gray-500 text-base max-w-md mx-auto">The standards that set us apart — in every pastry, every setup, every delivery.</p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 stagger">
+
+    <div class="glass-card rounded-3xl p-7">
+      <div class="icon-box w-12 h-12 rounded-xl mb-4"><i class="fa-regular fa-snowflake text-white"></i></div>
+      <h3 class="font-bold text-sky-900 text-base mb-2">Freshly Prepared</h3>
+      <p class="text-sm text-gray-600 leading-relaxed">All pastries crafted fresh with premium, locally sourced ingredients — no shortcuts, ever.</p>
+    </div>
+
+    <div class="glass-card rounded-3xl p-7">
+      <div class="icon-box w-12 h-12 rounded-xl mb-4"><i class="fa-regular fa-pen-to-square text-white"></i></div>
+      <h3 class="font-bold text-sky-900 text-base mb-2">Fully Customisable</h3>
+      <p class="text-sm text-gray-600 leading-relaxed">We adapt every design to your theme, brand, or personal vision — nothing is off the shelf.</p>
+    </div>
+
+    <div class="glass-card rounded-3xl p-7">
+      <div class="icon-box w-12 h-12 rounded-xl mb-4"><i class="fa-regular fa-clock text-white"></i></div>
+      <h3 class="font-bold text-sky-900 text-base mb-2">Reliable & Professional</h3>
+      <p class="text-sm text-gray-600 leading-relaxed">On-time delivery and stress-free coordination — we handle every detail so you don't have to.</p>
+    </div>
+
+    <div class="glass-card rounded-3xl p-7">
+      <div class="icon-box w-12 h-12 rounded-xl mb-4"><i class="fa-solid fa-fire-flame-curved text-white"></i></div>
+      <h3 class="font-bold text-sky-900 text-base mb-2">Passion for Excellence</h3>
+      <p class="text-sm text-gray-600 leading-relaxed">Genuine dedication is poured into every creation — from the first sketch to the final presentation.</p>
+    </div>
+
+    <div class="glass-card rounded-3xl p-7">
+      <div class="icon-box w-12 h-12 rounded-xl mb-4"><i class="fa-regular fa-credit-card text-white"></i></div>
+      <h3 class="font-bold text-sky-900 text-base mb-2">Competitive Pricing</h3>
+      <p class="text-sm text-gray-600 leading-relaxed">Tailored packages for every budget — premium quality that doesn't come with a premium price tag.</p>
+    </div>
+
+    <!-- contact card inline -->
+    <div class="glass-card rounded-3xl p-7" style="background:linear-gradient(135deg,rgba(11,31,58,0.90),rgba(26,74,138,0.85));border-color:rgba(96,165,250,0.2);">
+      <p class="text-blue-200/60 text-xs uppercase tracking-widest font-bold mb-3">Enquire Now</p>
+      <a href="tel:0793518160" class="serif text-3xl font-black text-white block hover:text-sky-300 transition-colors">079 351 8160</a>
+      <div class="mt-4 space-y-2 text-xs">
+        <div class="info-row" style="border-color:rgba(255,255,255,0.08);color:rgba(191,219,254,0.75);">
+          <i class="fa-solid fa-certificate text-blue-400 w-4"></i>
+          <span>Level 1 B-BBEE · 135% recognition</span>
+        </div>
+        <div class="info-row" style="border-color:rgba(255,255,255,0.08);color:rgba(191,219,254,0.75);">
+          <i class="fa-regular fa-location-dot text-blue-400 w-4"></i>
+          <span>Based Northern Cape · nationwide service</span>
+        </div>
+        <div class="info-row" style="border-color:rgba(255,255,255,0.08);color:rgba(191,219,254,0.75);">
+          <i class="fa-regular fa-user text-blue-400 w-4"></i>
+          <span>100% Black Female Owned</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════
+     PASTRY + DECOR SYNERGY
+═══════════════════════════ -->
+<section class="synergy-bg noise relative section" id="synergy">
+  <div class="relative z-10 max-w-7xl mx-auto">
+    <div class="text-center mb-12 reveal">
+      <div class="line-div mx-auto mb-5"></div>
+      <h2 class="serif text-4xl sm:text-5xl font-black text-white mb-4">
+        Pastry + Decor:<br>
+        <span class="grad-white italic">Full-Service Elegance</span>
+      </h2>
+      <p class="text-blue-100/75 max-w-2xl mx-auto text-base leading-relaxed">
+        Whether it's an intimate birthday or a corporate gala, North Industry delivers both the sweets and the setting — a seamless experience from concept to completion.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 reveal">
+
+      <!-- combined offering cards -->
+      <div class="glass rounded-3xl p-7">
+        <div class="icon-box w-12 h-12 rounded-xl mb-4" style="background:linear-gradient(135deg,rgba(255,255,255,0.15),rgba(255,255,255,0.08));border:1px solid rgba(255,255,255,0.2);box-shadow:none;">
+          <i class="fa-solid fa-heart text-white"></i>
+        </div>
+        <h3 class="serif text-xl font-bold text-white mb-2">Weddings</h3>
+        <p class="text-blue-100/75 text-sm leading-relaxed">Multi-tier custom cakes, macaron towers, themed dessert tables, full venue styling — your perfect day, perfected.</p>
+      </div>
+
+      <div class="glass rounded-3xl p-7">
+        <div class="icon-box w-12 h-12 rounded-xl mb-4" style="background:linear-gradient(135deg,rgba(255,255,255,0.15),rgba(255,255,255,0.08));border:1px solid rgba(255,255,255,0.2);box-shadow:none;">
+          <i class="fa-solid fa-building text-white"></i>
+        </div>
+        <h3 class="serif text-xl font-bold text-white mb-2">Corporate Events</h3>
+        <p class="text-blue-100/75 text-sm leading-relaxed">Branded desserts, elegant catering setups, gala dinner décor — impress clients and celebrate milestones in style.</p>
+      </div>
+
+      <div class="glass rounded-3xl p-7">
+        <div class="icon-box w-12 h-12 rounded-xl mb-4" style="background:linear-gradient(135deg,rgba(255,255,255,0.15),rgba(255,255,255,0.08));border:1px solid rgba(255,255,255,0.2);box-shadow:none;">
+          <i class="fa-solid fa-hat-wizard text-white"></i>
+        </div>
+        <h3 class="serif text-xl font-bold text-white mb-2">Themed Parties</h3>
+        <p class="text-blue-100/75 text-sm leading-relaxed">Coordinated decor and custom cakes that bring any theme to life — from fairy tales to fantasy, we make it real.</p>
+      </div>
+    </div>
+
+    <!-- bottom CTA strip -->
+    <div class="reveal mt-10 glass rounded-3xl p-7 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div>
+        <h4 class="serif text-2xl font-bold text-white mb-1">Ready to create something beautiful?</h4>
+        <p class="text-blue-200/70 text-sm">Let's talk about your event — we'd love to bring your vision to life.</p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-3 flex-shrink-0">
+        <a href="tel:0793518160" class="btn-pry whitespace-nowrap"><i class="fa-solid fa-phone text-xs"></i> 079 351 8160</a>
+        <a href="#pastries" class="btn-ghost whitespace-nowrap">Our Services</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════
+     FOOTER
+═══════════════════════════ -->
+<footer style="background:#0b1f3a;">
+  <div class="max-w-7xl mx-auto px-6 py-10">
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-6">
+      <div class="flex items-center gap-3">
+        <div class="icon-box w-10 h-10 rounded-xl"><i class="fa-solid fa-cake-candles text-white text-sm"></i></div>
+        <div>
+          <p class="serif font-bold text-white text-lg">North Industry</p>
+          <p class="text-blue-400/65 text-xs">Premium Pastries &amp; Decorative Services</p>
+        </div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-4 text-xs" style="color:rgba(147,197,253,0.55);">
+        <span>2023/790630/07</span>
+        <span class="hidden sm:inline" style="color:rgba(59,130,246,0.3);">|</span>
+        <span>Tax: 9041729303</span>
+        <span class="hidden sm:inline" style="color:rgba(59,130,246,0.3);">|</span>
+        <span>Fin. Year End: February</span>
+        <span class="hidden sm:inline" style="color:rgba(59,130,246,0.3);">|</span>
+        <span>Director: Saina Titus</span>
+        <span class="hidden sm:inline" style="color:rgba(59,130,246,0.3);">|</span>
+        <a href="https://www.cipc.co.za" target="_blank" class="hover:text-blue-300 transition-colors">www.cipc.co.za</a>
+      </div>
+    </div>
+    <hr style="border-color:rgba(59,130,246,0.10);margin:1.5rem 0 1rem;">
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-3 text-xs" style="color:rgba(147,197,253,0.35);">
+      <p>Physical: dti Campus - Block F, 77 Meintjes St, Sunnyside, Pretoria</p>
+      <p>Postal: P O Box 429, Pretoria 0001 · 086 100 2472</p>
+    </div>
+    <p class="text-center mt-4 tracking-widest text-xs" style="color:rgba(59,130,246,0.18);">NORTH INDUSTRY · SERVICES PAGE · NORTH INDUSTRY (PTY) LTD</p>
+  </div>
+</footer>
+
+
+<script>
+  function toggleMenu() {
+    const m = document.getElementById('mob-menu');
+    const i = document.getElementById('micon');
+    m.classList.toggle('open');
+    i.classList.toggle('fa-bars');
+    i.classList.toggle('fa-xmark');
+  }
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.10 });
+  document.querySelectorAll('.reveal,.reveal-l,.reveal-r,.stagger').forEach(el => obs.observe(el));
+
+  // hero reveals on load
+  document.querySelectorAll('.hero-services .reveal').forEach(el => el.classList.add('visible'));
+
+  // navbar scroll tint
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.background =
+      window.scrollY > 40 ? 'rgba(11,31,58,0.96)' : 'rgba(11,31,58,0.72)';
+  });
+</script>
+</body>
+</html>

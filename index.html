@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>North Industry · Premium Pastries & Decorative Services</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --navy:    #0b1f3a;
+      --dark-blue: #0d2d5e;
+      --mid-blue: #1a4a8a;
+      --accent:   #3b82f6;
+      --sky:      #60a5fa;
+      --pale:     #dbeafe;
+      --glass-bg: rgba(255,255,255,0.13);
+      --glass-border: rgba(255,255,255,0.25);
+      --glass-shadow: 0 8px 32px rgba(11,31,58,0.25);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f0f6ff;
+      color: #1a2e4a;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .serif { font-family: 'Playfair Display', serif; }
+
+    /* ─── UNSPLASH HERO IMAGES (baking & decor themed) ─── */
+    .hero-bg {
+      background-image:
+        linear-gradient(160deg, rgba(11,31,58,0.82) 0%, rgba(26,74,138,0.72) 50%, rgba(59,130,246,0.50) 100%),
+        url('https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=1400&q=80&fit=crop');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .pastry-bg {
+      background-image:
+        linear-gradient(150deg, rgba(11,31,58,0.78) 0%, rgba(59,130,246,0.45) 100%),
+        url('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=900&q=80&fit=crop');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .decor-bg {
+      background-image:
+        linear-gradient(150deg, rgba(11,31,58,0.78) 0%, rgba(96,165,250,0.45) 100%),
+        url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=900&q=80&fit=crop');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .values-bg {
+      background-image:
+        linear-gradient(160deg, rgba(11,31,58,0.90) 0%, rgba(26,74,138,0.80) 100%),
+        url('https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=1200&q=80&fit=crop');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .bbee-bg {
+      background-image:
+        linear-gradient(135deg, rgba(11,31,58,0.88) 0%, rgba(59,130,246,0.60) 100%),
+        url('https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=1200&q=80&fit=crop');
+      background-size: cover;
+      background-position: center top;
+    }
+
+    /* ─── GLASSMORPHISM ─── */
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+    }
+
+    .glass-white {
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.55);
+      box-shadow: 0 8px 32px rgba(11,31,58,0.12);
+    }
+
+    .glass-card {
+      background: rgba(255,255,255,0.60);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.45);
+      box-shadow: 0 10px 40px rgba(11,31,58,0.14);
+      transition: transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s, background 0.25s;
+    }
+    .glass-card:hover {
+      transform: translateY(-8px) scale(1.015);
+      background: rgba(255,255,255,0.82);
+      box-shadow: 0 24px 60px rgba(11,31,58,0.22);
+    }
+
+    /* ─── NAVBAR ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(11,31,58,0.72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .nav-link {
+      color: rgba(255,255,255,0.78);
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: color 0.2s;
+      padding: 0.25rem 0.5rem;
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute; bottom: -2px; left: 0; width: 0; height: 1px;
+      background: #60a5fa;
+      transition: width 0.25s;
+    }
+    .nav-link:hover { color: #fff; }
+    .nav-link:hover::after { width: 100%; }
+
+    /* ─── HERO SECTION ─── */
+    .hero-section {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 6rem 1.5rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* animated gradient ring */
+    .hero-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(96,165,250,0.2);
+      animation: pulse-ring 5s ease-in-out infinite;
+    }
+    @keyframes pulse-ring {
+      0%, 100% { transform: scale(1); opacity: 0.4; }
+      50% { transform: scale(1.06); opacity: 0.8; }
+    }
+
+    /* floating sparkle dots */
+    .sparkle {
+      position: absolute;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(96,165,250,0.7);
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
+      50% { transform: translateY(-20px) scale(1.4); opacity: 1; }
+    }
+
+    /* badge pill */
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(59,130,246,0.18);
+      border: 1px solid rgba(96,165,250,0.35);
+      border-radius: 40px;
+      padding: 0.35rem 1rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #bfdbfe;
+      font-weight: 600;
+    }
+
+    /* gradient text */
+    .grad-text {
+      background: linear-gradient(120deg, #ffffff 0%, #bfdbfe 50%, #60a5fa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .grad-text-dark {
+      background: linear-gradient(120deg, #0b1f3a 0%, #1a4a8a 60%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* divider line */
+    .line-div {
+      width: 72px; height: 3px;
+      background: linear-gradient(90deg, #3b82f6, #60a5fa, #bfdbfe);
+      border-radius: 2px;
+    }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left { opacity: 0; transform: translateX(-32px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.22,1,.36,1); }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right { opacity: 0; transform: translateX(32px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.22,1,.36,1); }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* staggered children */
+    .stagger > * { opacity: 0; transform: translateY(28px); transition: opacity 0.5s ease, transform 0.5s cubic-bezier(.22,1,.36,1); }
+    .stagger.visible > *:nth-child(1) { opacity:1; transform:translateY(0); transition-delay: 0.05s; }
+    .stagger.visible > *:nth-child(2) { opacity:1; transform:translateY(0); transition-delay: 0.15s; }
+    .stagger.visible > *:nth-child(3) { opacity:1; transform:translateY(0); transition-delay: 0.25s; }
+    .stagger.visible > *:nth-child(4) { opacity:1; transform:translateY(0); transition-delay: 0.35s; }
+    .stagger.visible > *:nth-child(5) { opacity:1; transform:translateY(0); transition-delay: 0.45s; }
+
+    /* ─── SERVICE ICON BUTTONS ─── */
+    .icon-wrap {
+      width: 56px; height: 56px; border-radius: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #1a4a8a, #3b82f6);
+      box-shadow: 0 6px 16px rgba(59,130,246,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+      flex-shrink: 0;
+    }
+    .glass-card:hover .icon-wrap {
+      transform: rotate(-6deg) scale(1.1);
+      box-shadow: 0 10px 24px rgba(59,130,246,0.55);
+    }
+
+    /* ─── VALUE CHIPS ─── */
+    .value-chip {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.20);
+      border-radius: 50px;
+      padding: 0.6rem 1.2rem;
+      color: #fff;
+      font-size: 0.88rem;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .value-chip:hover {
+      background: rgba(255,255,255,0.18);
+      transform: scale(1.04);
+    }
+
+    /* ─── STAT TILES ─── */
+    .stat-tile {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 1.25rem;
+      padding: 1.25rem;
+      text-align: center;
+      transition: background 0.25s, transform 0.25s;
+    }
+    .stat-tile:hover {
+      background: rgba(255,255,255,0.16);
+      transform: translateY(-4px);
+    }
+
+    /* ─── INFO ROWS ─── */
+    .info-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(11,31,58,0.08);
+    }
+    .info-row:last-child { border-bottom: none; }
+
+    /* ─── MOBILE NAV ─── */
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: flex; }
+
+    /* ─── CTA BUTTON ─── */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(120deg, #1a4a8a, #3b82f6);
+      color: #fff;
+      padding: 0.9rem 2rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      border: none; cursor: pointer;
+      box-shadow: 0 6px 24px rgba(59,130,246,0.4);
+      transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+      text-decoration: none;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(59,130,246,0.55);
+      filter: brightness(1.08);
+    }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      padding: 0.9rem 2rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border: 1px solid rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      text-decoration: none;
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.22);
+      transform: translateY(-3px);
+    }
+
+    /* ─── WHY CHOOSE CARD ─── */
+    .why-card {
+      display: flex; align-items: flex-start; gap: 14px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.55);
+      border-radius: 1rem;
+      padding: 1rem 1.2rem;
+      transition: background 0.25s, transform 0.25s;
+    }
+    .why-card:hover {
+      background: rgba(255,255,255,0.85);
+      transform: translateY(-3px);
+    }
+
+    /* ─── SECTION WRAPPER ─── */
+    .section { padding: 6rem 1.5rem; }
+    @media (max-width: 768px) {
+      .section { padding: 4rem 1rem; }
+    }
+
+    /* ─── BBEE BADGE ─── */
+    .bbee-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: linear-gradient(120deg, #0b1f3a, #1a4a8a);
+      color: #fff;
+      border-radius: 40px;
+      padding: 0.35rem 1.1rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ─── SCROLL INDICATOR ─── */
+    .scroll-dot {
+      width: 2px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.7), transparent);
+      margin: 0 auto;
+      border-radius: 2px;
+      animation: scroll-anim 2s ease-in-out infinite;
+    }
+    @keyframes scroll-anim {
+      0%, 100% { transform: scaleY(1); opacity: 0.7; }
+      50% { transform: scaleY(0.5) translateY(10px); opacity: 1; }
+    }
+
+    /* ─── CUSTOM SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f0f6ff; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #3b82f6, #0b1f3a); border-radius: 3px; }
+
+    /* ─── NOISE OVERLAY (subtle texture) ─── */
+    .noise::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0;
+    }
+
+    /* wavy divider */
+    .wavy-divider { line-height: 0; overflow: hidden; }
+
+    /* director name */
+    .director-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #0b1f3a;
+    }
+
+    @media (max-width: 640px) {
+      .hero-section { padding-top: 5rem; min-height: 95vh; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════ -->
+<nav class="py-3 px-4 sm:px-8">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <a href="#" class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,#1a4a8a,#3b82f6)">
+        <i class="fa-solid fa-cake-candles text-white text-sm"></i>
+      </div>
+      <span style="font-family:'Playfair Display',serif;font-size:1.15rem;color:#fff;font-weight:700;letter-spacing:-0.01em;">North Industry</span>
+    </a>
+
+    <!-- desktop links -->
+    <div class="hidden md:flex items-center gap-6">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+      <a href="tel:0793518160" class="btn-primary py-2 px-5 text-sm">
+        <i class="fa-solid fa-phone text-xs"></i> Call Us
+      </a>
+    </div>
+
+    <button id="menu-btn" class="md:hidden text-white/80 hover:text-white p-2" onclick="toggleMenu()">
+      <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="md:hidden flex-col gap-1 pt-3 pb-2 px-2 border-t border-white/10 mt-2">
+    <a href="index.html" class="block nav-link py-2" onclick="toggleMenu()">Home</a>
+    <a href="about.html" class="block nav-link py-2" onclick="toggleMenu()">About</a>
+    <a href="services.html" class="block nav-link py-2" onclick="toggleMenu()">Services</a>
+    <a href="contact.html" class="block nav-link py-2" onclick="toggleMenu()">Contact</a>
+    <a href="tel:0793518160" class="btn-primary mt-3 text-sm w-full justify-center">
+      <i class="fa-solid fa-phone text-xs"></i> 079 351 8160
+    </a>
+  </div>
+</nav>
+
+
+
+<section class="hero-section hero-bg noise relative" id="home">
+  <div class="hero-ring" style="width:600px;height:600px;left:calc(50% - 300px);top:calc(50% - 300px);animation-delay:0s;"></div>
+  <div class="hero-ring" style="width:900px;height:900px;left:calc(50% - 450px);top:calc(50% - 450px);animation-delay:1.5s;opacity:0.2;"></div>
+
+  <div class="sparkle" style="top:18%;left:12%;animation-delay:0s;"></div>
+  <div class="sparkle" style="top:70%;left:8%;animation-delay:1.2s;width:4px;height:4px;"></div>
+  <div class="sparkle" style="top:25%;right:15%;animation-delay:2.4s;"></div>
+  <div class="sparkle" style="top:65%;right:10%;animation-delay:0.8s;width:4px;height:4px;"></div>
+  <div class="sparkle" style="top:80%;left:45%;animation-delay:1.8s;width:8px;height:8px;"></div>
+
+  <div class="relative z-10 max-w-5xl mx-auto text-center px-4">
+    <div class="pill mb-6 reveal" style="transition-delay:0.1s">
+      <span class="w-2 h-2 rounded-full bg-sky-400 inline-block animate-pulse"></span>
+      Established 2023 · Northern Cape
+    </div>
+
+    <h1 class="reveal serif text-5xl sm:text-7xl lg:text-8xl font-black leading-none mb-6" style="transition-delay:0.2s;">
+      <span class="grad-text block">North</span>
+      <span class="text-white block">Industry</span>
+    </h1>
+
+    <p class="reveal text-lg sm:text-xl text-blue-100/90 max-w-2xl mx-auto leading-relaxed font-light mb-10" style="transition-delay:0.35s;">
+      Premium pastries crafted with love & elegant decorative services that transform every occasion into an unforgettable experience.
+    </p>
+
+    <div class="reveal flex flex-col sm:flex-row gap-4 justify-center" style="transition-delay:0.5s;">
+      <a href="#services" class="btn-primary text-base px-8">
+        Explore Services <i class="fa-solid fa-arrow-right text-sm"></i>
+      </a>
+      <a href="#contact" class="btn-ghost text-base px-8">
+        Get in Touch
+      </a>
+    </div>
+
+    <!-- scroll indicator -->
+    <div class="mt-16 reveal opacity-60" style="transition-delay:0.7s;">
+      <p class="text-white/50 text-xs tracking-widest uppercase mb-2">Scroll to explore</p>
+      <div class="scroll-dot"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- wavy divider -->
+<div class="wavy-divider" style="background:#f0f6ff;">
+  <svg viewBox="0 0 1200 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;height:60px;">
+    <path d="M0,30 C300,60 900,0 1200,30 L1200,60 L0,60 Z" fill="#f0f6ff" stroke="none"/>
+    <path d="M0,30 C300,60 900,0 1200,30" fill="none" stroke="rgba(59,130,246,0.15)" stroke-width="2"/>
+  </svg>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     ABOUT
+══════════════════════════════════════ -->
+<section class="section max-w-7xl mx-auto" id="about">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+    <!-- left text -->
+    <div class="reveal-left">
+      <div class="line-div mb-5"></div>
+      <h2 class="serif text-4xl sm:text-5xl font-black mb-6 grad-text-dark leading-tight">
+        A Story of Craft &amp;<br>Creativity
+      </h2>
+      <p class="text-gray-600 text-lg leading-relaxed mb-5">
+        <span class="font-semibold text-navy" style="color:#0b1f3a;">Founded in 2023</span>, North Industry is a creative and quality-driven company specialising in premium pastries and decorative services — dedicated to delivering exceptional taste and visually stunning designs.
+      </p>
+      <blockquote class="border-l-4 border-blue-400 pl-5 italic text-gray-500 text-base leading-relaxed mb-7">
+        "We combine craftsmanship, creativity, and attention to detail to produce pastries that are not only delicious but also beautifully presented."
+      </blockquote>
+
+      <!-- mission chip -->
+      <div class="glass-white rounded-2xl p-4 flex items-center gap-4">
+        <div class="icon-wrap w-12 h-12 rounded-xl flex-shrink-0">
+          <i class="fa-regular fa-heart text-white"></i>
+        </div>
+        <div>
+          <p class="text-xs uppercase tracking-widest text-blue-500 font-bold">Our Mission</p>
+          <p class="text-sm text-gray-700 font-medium mt-0.5">To create memorable experiences through high-quality pastries and sophisticated decorative designs.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- right: vision + photo collage area -->
+    <div class="reveal-right grid grid-cols-2 gap-4">
+      <!-- vision card -->
+      <div class="col-span-2 glass-card rounded-3xl p-6"
+        style="background:linear-gradient(135deg,rgba(11,31,58,0.92),rgba(26,74,138,0.88));
+               border:1px solid rgba(96,165,250,0.25);
+               background-image:linear-gradient(135deg,rgba(11,31,58,0.92),rgba(26,74,138,0.88)),url('https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=600&q=80&fit=crop');
+               background-blend-mode:overlay;background-size:cover;background-position:center;">
+        <i class="fa-regular fa-eye text-blue-300 text-2xl mb-3 block"></i>
+        <h3 class="serif text-xl font-bold text-white mb-2">Our Vision</h3>
+        <p class="text-blue-100/85 text-sm leading-relaxed">To become a trusted and recognised brand known for excellence, creativity, and innovation in pastries and event decoration.</p>
+      </div>
+
+      <!-- stat 1 -->
+      <div class="glass-card rounded-2xl p-5 text-center">
+        <div class="text-4xl font-black grad-text-dark serif mb-1">100%</div>
+        <p class="text-xs text-gray-500 uppercase tracking-wider font-medium">Black Owned</p>
+      </div>
+
+      <!-- stat 2 -->
+      <div class="glass-card rounded-2xl p-5 text-center"
+        style="background:linear-gradient(135deg,#0b1f3a,#1a4a8a);border-color:rgba(96,165,250,0.2)">
+        <div class="text-4xl font-black text-white serif mb-1">Lvl 1</div>
+        <p class="text-xs text-blue-200 uppercase tracking-wider font-medium">B-BBEE · 135%</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     SERVICES
+══════════════════════════════════════ -->
+<section class="section" id="services" style="background:linear-gradient(160deg,#e8f0fe 0%,#f0f6ff 60%,#dbeafe 100%);">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-14 reveal">
+      <div class="line-div mx-auto mb-5"></div>
+      <h2 class="serif text-4xl sm:text-5xl font-black grad-text-dark mb-4">What We Create</h2>
+      <p class="text-gray-500 text-lg max-w-xl mx-auto">Two pillars of excellence — every bite as beautiful as every backdrop.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+      <!-- pastries card -->
+      <div class="reveal-left rounded-3xl overflow-hidden shadow-2xl" style="box-shadow:0 20px 60px rgba(11,31,58,0.18);">
+        <!-- image hero inside -->
+        <div class="pastry-bg h-56 sm:h-64 flex items-end p-6 relative">
+          <div class="glass rounded-xl px-4 py-2 flex items-center gap-3">
+            <i class="fa-solid fa-cake-candles text-white text-2xl"></i>
+            <span class="text-white font-bold text-lg serif">Premium Pastries</span>
+          </div>
+        </div>
+        <!-- content -->
+        <div class="glass-white p-7">
+          <p class="text-gray-600 text-sm mb-5 leading-relaxed">Handcrafted with the finest ingredients, each creation is a masterpiece of flavour and artistry.</p>
+          <ul class="stagger space-y-3">
+            <li class="glass-card rounded-xl px-4 py-3 flex items-center gap-3 text-sm font-medium">
+              <span class="icon-wrap w-8 h-8 rounded-lg"><i class="fa-solid fa-star text-white text-xs"></i></span>
+              Custom Cakes
+            </li>
+            <li class="glass-card rounded-xl px-4 py-3 flex items-center gap-3 text-sm font-medium">
+              <span class="icon-wrap w-8 h-8 rounded-lg"><i class="fa-solid fa-cookie-bite text-white text-xs"></i></span>
+              Artisan Desserts
+            </li>
+            <li class="glass-card rounded-xl px-4 py-3 flex items-center gap-3 text-sm font-medium">
+              <span class="icon-wrap w-8 h-8 rounded-lg"><i class="fa-solid fa-heart text-white text-xs"></i></span>
+              Event Pastries
+            </li>
+            <li class="glass-card rounded-xl px-4 py-3 flex items-center gap-3 text-sm font-medium">
+              <span class="icon-wrap w-8 h-8 rounded-lg"><i class="fa-solid fa-gift text-white text-xs"></i></span>
+              Special Occasion Treats
+            </li>
+            <li class="glass-card rounded-xl px-4 py-3 flex items-center gap-3 text-sm font-medium">
+              <span class="icon-wrap w-8 h-8 rounded-lg"><i class="fa-solid fa-palette text-white text-xs"></i></span>
+              Themed Baked Creations
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- decor card -->
+      <div class="reveal-right rounded-3xl overflow-hidden shadow-2xl" style="box-shadow:0 20px 60px rgba(11,31,58,0.18);">
+        <div class="decor-bg h-56 sm:h-64 flex items-end p-6 relative">
+          <div class="glass rounded-xl px-4 py-2 flex items-center gap-3">
+            <i class="fa-solid fa-wand-magic-sparkles text-white text-2xl"></i>
+            <span class="text-white font-bold text-lg serif">Decorative Services</span>
+          </div>
+        </div>
+        <div class="glass-white p-7">
+          <p class="text-gray-600 text-sm mb-5 leading-relaxed">Transforming spaces into breathtaking scenes that complement every celebration and corporate event.</p>
+          <ul class="stagger space-y-3">
+            <li class="glass-card rounded-xl px-4 py-3 flex items-center gap-3 text-sm font-medium">
+              <span class="icon-wrap w-8 h-8 rounded-lg"><i class="fa-solid fa-champagne-glasses text-white text-xs"></i></span>
+              Event Decoration
+            </li>
+            <li class="glass-card rounded-xl px-4 py-3 flex items-center gap-3 text-sm font-medium">
+              <span class="icon-wrap w-8 h-8 rounded-lg"><i class="fa-solid fa-table text-white text-xs"></i></span>
+              Dessert Table Styling
+            </li>
+            <li class="glass-card rounded-xl px-4 py-3 flex items-center gap-3 text-sm font-medium">
+              <span class="icon-wrap w-8 h-8 rounded-lg"><i class="fa-solid fa-hat-wizard text-white text-xs"></i></span>
+              Themed Party Setups
+            </li>
+            <li class="glass-card rounded-xl px-4 py-3 flex items-center gap-3 text-sm font-medium">
+              <span class="icon-wrap w-8 h-8 rounded-lg"><i class="fa-solid fa-building text-white text-xs"></i></span>
+              Corporate Event Decor
+            </li>
+            <li class="glass-card rounded-xl px-4 py-3 flex items-center gap-3 text-sm font-medium">
+              <span class="icon-wrap w-8 h-8 rounded-lg"><i class="fa-solid fa-compass-drafting text-white text-xs"></i></span>
+              Custom Design Concepts
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     VALUES / WHY CHOOSE (dark hero)
+══════════════════════════════════════ -->
+<section class="values-bg section relative noise" id="values">
+  <div class="relative z-10 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+
+      <!-- left: why choose -->
+      <div class="reveal-left">
+        <div class="line-div mb-5"></div>
+        <h2 class="serif text-4xl sm:text-5xl font-black text-white mb-4 leading-tight">Why Choose<br>North Industry?</h2>
+        <p class="text-blue-200/80 mb-8 leading-relaxed">We pour heart and precision into everything we do — here's why clients keep coming back.</p>
+
+        <div class="space-y-4 stagger">
+          <div class="why-card" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);">
+            <div class="icon-wrap w-11 h-11 rounded-xl">
+              <i class="fa-regular fa-snowflake text-white text-sm"></i>
+            </div>
+            <div>
+              <p class="text-white font-semibold text-sm">Fresh, Quality Ingredients</p>
+              <p class="text-blue-200/70 text-xs mt-0.5">Freshly prepared with premium sourced ingredients for every order.</p>
+            </div>
+          </div>
+          <div class="why-card" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);">
+            <div class="icon-wrap w-11 h-11 rounded-xl">
+              <i class="fa-regular fa-pen-to-square text-white text-sm"></i>
+            </div>
+            <div>
+              <p class="text-white font-semibold text-sm">Unique & Customisable Designs</p>
+              <p class="text-blue-200/70 text-xs mt-0.5">No two creations are alike — everything is tailored to your vision.</p>
+            </div>
+          </div>
+          <div class="why-card" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);">
+            <div class="icon-wrap w-11 h-11 rounded-xl">
+              <i class="fa-regular fa-clock text-white text-sm"></i>
+            </div>
+            <div>
+              <p class="text-white font-semibold text-sm">Professional & Reliable</p>
+              <p class="text-blue-200/70 text-xs mt-0.5">On time, every time — with meticulous attention to quality.</p>
+            </div>
+          </div>
+          <div class="why-card" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);">
+            <div class="icon-wrap w-11 h-11 rounded-xl">
+              <i class="fa-solid fa-fire-flame-curved text-white text-sm"></i>
+            </div>
+            <div>
+              <p class="text-white font-semibold text-sm">Passion for Excellence</p>
+              <p class="text-blue-200/70 text-xs mt-0.5">We bring genuine passion to every pastry and every decorated space.</p>
+            </div>
+          </div>
+          <div class="why-card" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);">
+            <div class="icon-wrap w-11 h-11 rounded-xl">
+              <i class="fa-regular fa-credit-card text-white text-sm"></i>
+            </div>
+            <div>
+              <p class="text-white font-semibold text-sm">Competitive Pricing</p>
+              <p class="text-blue-200/70 text-xs mt-0.5">Premium quality without the premium price tag.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- right: core values -->
+      <div class="reveal-right">
+        <div class="glass rounded-3xl p-8">
+          <h3 class="serif text-2xl font-bold text-white mb-6">Our Core Values</h3>
+          <div class="flex flex-wrap gap-3 mb-8">
+            <span class="value-chip"><i class="fa-solid fa-leaf text-emerald-400 text-sm"></i> Quality</span>
+            <span class="value-chip"><i class="fa-regular fa-lightbulb text-amber-400 text-sm"></i> Creativity</span>
+            <span class="value-chip"><i class="fa-regular fa-face-smile text-sky-400 text-sm"></i> Satisfaction</span>
+            <span class="value-chip"><i class="fa-regular fa-handshake text-indigo-300 text-sm"></i> Professionalism</span>
+            <span class="value-chip"><i class="fa-regular fa-eye text-blue-300 text-sm"></i> Attention to Detail</span>
+          </div>
+
+          <!-- stats row -->
+          <div class="grid grid-cols-3 gap-3">
+            <div class="stat-tile">
+              <p class="text-2xl font-black text-white serif">2023</p>
+              <p class="text-xs text-blue-200/70 mt-1">Founded</p>
+            </div>
+            <div class="stat-tile">
+              <p class="text-2xl font-black text-white serif">100%</p>
+              <p class="text-xs text-blue-200/70 mt-1">Black Female</p>
+            </div>
+            <div class="stat-tile">
+              <p class="text-2xl font-black text-white serif">135%</p>
+              <p class="text-xs text-blue-200/70 mt-1">Procurement</p>
+            </div>
+          </div>
+
+          <div class="mt-6 flex gap-3">
+            <a href="tel:0793518160" class="btn-primary flex-1 justify-center text-sm py-3">
+              <i class="fa-solid fa-phone text-xs"></i> Call Now
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     B-BBEE SECTION
+══════════════════════════════════════ -->
+<section class="section" id="bbee" style="background:linear-gradient(160deg,#f0f6ff 0%,#dbeafe 100%);">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12 reveal">
+      <div class="line-div mx-auto mb-5"></div>
+      <h2 class="serif text-4xl sm:text-5xl font-black grad-text-dark mb-3">B-BBEE Compliance</h2>
+      <p class="text-gray-500 text-base max-w-lg mx-auto">Proud to be a Level 1 EME contributor with 135% procurement recognition.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+      <!-- certificate card -->
+      <div class="lg:col-span-2 bbee-bg rounded-3xl overflow-hidden reveal-left" style="min-height:380px;">
+        <div class="p-8 h-full flex flex-col justify-between" style="background:linear-gradient(160deg,rgba(11,31,58,0.88),rgba(26,74,138,0.78));">
+          <div>
+            <span class="bbee-badge mb-4 inline-flex"><i class="fa-solid fa-medal text-amber-300"></i> B-BBEE Level 1 · EME</span>
+            <h3 class="serif text-3xl font-bold text-white mb-2">Exemption Certificate</h3>
+            <p class="font-mono text-blue-200/70 text-sm mb-6">No. 9442917900</p>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div class="stat-tile">
+              <p class="text-2xl font-black text-white serif">1</p>
+              <p class="text-xs text-blue-200/70 mt-1">Total Shareholders</p>
+            </div>
+            <div class="stat-tile">
+              <p class="text-2xl font-black text-white serif">100%</p>
+              <p class="text-xs text-blue-200/70 mt-1">Black Owned</p>
+            </div>
+            <div class="stat-tile">
+              <p class="text-2xl font-black text-white serif">100%</p>
+              <p class="text-xs text-blue-200/70 mt-1">Female Owned</p>
+            </div>
+            <div class="stat-tile">
+              <p class="text-2xl font-black text-white serif">135%</p>
+              <p class="text-xs text-blue-200/70 mt-1">Procurement</p>
+            </div>
+          </div>
+
+          <div class="mt-6 glass rounded-xl p-4 flex flex-wrap gap-4 justify-between items-center">
+            <div>
+              <p class="text-xs text-blue-200/60 uppercase tracking-wider">Issue Date</p>
+              <p class="text-white font-bold">02 September 2025</p>
+            </div>
+            <div class="w-px h-8 bg-white/20 hidden sm:block"></div>
+            <div>
+              <p class="text-xs text-blue-200/60 uppercase tracking-wider">Expiry Date</p>
+              <p class="text-white font-bold">01 September 2026</p>
+            </div>
+            <div class="w-px h-8 bg-white/20 hidden sm:block"></div>
+            <div>
+              <p class="text-xs text-blue-200/60 uppercase tracking-wider">Status</p>
+              <span class="inline-flex items-center gap-1.5 text-emerald-300 font-bold text-sm">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block"></span> Active
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- director card -->
+      <div class="glass-card rounded-3xl p-7 reveal-right flex flex-col justify-between"
+        style="background:rgba(255,255,255,0.65);">
+        <div>
+          <div class="flex items-center gap-3 mb-6">
+            <div class="icon-wrap w-14 h-14 rounded-2xl">
+              <i class="fa-regular fa-user text-white text-xl"></i>
+            </div>
+            <div>
+              <p class="text-xs text-blue-500 uppercase tracking-widest font-bold">Director</p>
+              <p class="director-name">SAINA TITUS</p>
+            </div>
+          </div>
+
+          <div class="space-y-0">
+            <div class="info-row text-sm">
+              <i class="fa-solid fa-id-card text-blue-400 w-4 flex-shrink-0"></i>
+              <span class="text-gray-500">ID:</span>
+              <span class="font-mono font-medium text-gray-700">6807140484086</span>
+            </div>
+            <div class="info-row text-sm">
+              <i class="fa-regular fa-calendar text-blue-400 w-4 flex-shrink-0"></i>
+              <span class="text-gray-500">Appointed:</span>
+              <span class="font-medium text-gray-700">02/06/2023</span>
+            </div>
+            <div class="info-row text-sm">
+              <i class="fa-regular fa-envelope text-blue-400 w-4 flex-shrink-0"></i>
+              <span class="text-gray-500">Postal:</span>
+              <span class="text-gray-700">15 Trichard Oord, Randfontein, 1759</span>
+            </div>
+            <div class="info-row text-sm">
+              <i class="fa-regular fa-location-dot text-blue-400 w-4 flex-shrink-0"></i>
+              <span class="text-gray-500">Office:</span>
+              <span class="text-gray-700">House 1411 Deben, Northern Cape</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 bg-gradient-to-r from-blue-50 to-sky-50 p-4 rounded-2xl border border-blue-100">
+          <p class="text-xs text-gray-500 font-medium">
+            <i class="fa-solid fa-certificate text-blue-500 mr-1"></i>
+            100% Black Female Owned · Private Company · Reg. 2023/790630/07
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     CONTACT
+══════════════════════════════════════ -->
+<section class="section hero-bg noise relative" id="contact">
+  <div class="relative z-10 max-w-6xl mx-auto">
+    <div class="text-center mb-12 reveal">
+      <div class="line-div mx-auto mb-5"></div>
+      <h2 class="serif text-4xl sm:text-5xl font-black text-white mb-3">Get in Touch</h2>
+      <p class="text-blue-100/80 max-w-xl mx-auto">Ready to make your event extraordinary? Let's create something beautiful together.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
+
+      <!-- phone -->
+      <div class="glass rounded-3xl p-7 text-center group hover:scale-[1.03] transition-transform duration-300">
+        <div class="icon-wrap w-16 h-16 rounded-2xl mx-auto mb-4 group-hover:rotate-6 transition-transform"
+          style="background:linear-gradient(135deg,#fff2,#fff3);border:1px solid rgba(255,255,255,0.3);">
+          <i class="fa-solid fa-phone-volume text-white text-2xl"></i>
+        </div>
+        <p class="text-blue-200/70 text-xs uppercase tracking-widest mb-2">Call Directly</p>
+        <a href="tel:0793518160" class="text-3xl font-black text-white serif hover:text-sky-300 transition-colors block">
+          079 351 8160
+        </a>
+      </div>
+
+      <!-- registration -->
+      <div class="glass rounded-3xl p-7 text-center">
+        <div class="icon-wrap w-16 h-16 rounded-2xl mx-auto mb-4"
+          style="background:linear-gradient(135deg,#fff2,#fff3);border:1px solid rgba(255,255,255,0.3);">
+          <i class="fa-regular fa-file-lines text-white text-2xl"></i>
+        </div>
+        <p class="text-blue-200/70 text-xs uppercase tracking-widest mb-3">Company Details</p>
+        <div class="space-y-1 text-sm text-white/80">
+          <p><span class="text-blue-200/60 text-xs">Reg. No.</span><br><span class="font-mono font-bold text-white">2023/790630/07</span></p>
+          <p><span class="text-blue-200/60 text-xs">Tax Nr.</span><br><span class="font-mono font-bold text-white">9041729303</span></p>
+          <p><span class="text-blue-200/60 text-xs">Fin. Year End</span><br><span class="font-bold text-white">February</span></p>
+        </div>
+      </div>
+
+      <!-- location -->
+      <div class="glass rounded-3xl p-7 text-center">
+        <div class="icon-wrap w-16 h-16 rounded-2xl mx-auto mb-4"
+          style="background:linear-gradient(135deg,#fff2,#fff3);border:1px solid rgba(255,255,255,0.3);">
+          <i class="fa-regular fa-location-dot text-white text-2xl"></i>
+        </div>
+        <p class="text-blue-200/70 text-xs uppercase tracking-widest mb-3">Location</p>
+        <p class="text-white text-sm leading-relaxed font-medium">House 1411 Deben,<br>Northern Cape</p>
+        <hr class="border-white/10 my-3">
+        <p class="text-blue-100/60 text-xs">CIPC Contact Centre:<br><span class="font-bold text-white/80">086 100 2472</span></p>
+      </div>
+    </div>
+
+    <!-- bottom CTA -->
+    <div class="text-center mt-12 reveal">
+      <a href="tel:0793518160" class="btn-primary text-lg px-10 py-4">
+        <i class="fa-solid fa-phone"></i> Call 079 351 8160
+      </a>
+      <p class="text-blue-200/50 text-xs mt-4 uppercase tracking-widest">We'd love to hear from you</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer style="background:#0b1f3a;">
+  <div class="max-w-7xl mx-auto px-6 py-10">
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,#1a4a8a,#3b82f6)">
+          <i class="fa-solid fa-cake-candles text-white text-sm"></i>
+        </div>
+        <div>
+          <p class="serif font-bold text-white text-lg">North Industry</p>
+          <p class="text-blue-400/70 text-xs">Premium Pastries & Decorative Services</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-4 text-xs text-blue-300/60">
+        <span>CIPC: 2023/790630/07</span>
+        <span class="hidden sm:inline text-blue-800">|</span>
+        <span>Est. 02/06/2023</span>
+        <span class="hidden sm:inline text-blue-800">|</span>
+        <span>B-BBEE EME Level 1</span>
+        <span class="hidden sm:inline text-blue-800">|</span>
+        <a href="https://www.cipc.co.za" target="_blank" class="hover:text-blue-300 transition-colors">www.cipc.co.za</a>
+      </div>
+    </div>
+
+    <hr style="border-color:rgba(59,130,246,0.12);margin-top:1.5rem;margin-bottom:1rem;">
+
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-3 text-xs" style="color:rgba(147,197,253,0.4);">
+      <p>Physical: dti Campus - Block F, 77 Meintjes St, Sunnyside, Pretoria</p>
+      <p>Postal: Companies, P O Box 429, Pretoria 0001</p>
+    </div>
+
+    <p class="text-center mt-4 tracking-widest text-xs" style="color:rgba(59,130,246,0.2);">
+      NORTH INDUSTRY · PREMIUM PASTRIES & DECORATIVE SERVICES · NORTHERN CAPE
+    </p>
+  </div>
+</footer>
+
+
+<script>
+  // ─── MOBILE MENU ───
+  function toggleMenu() {
+    const menu = document.getElementById('mobile-menu');
+    const icon = document.getElementById('menu-icon');
+    menu.classList.toggle('open');
+    icon.classList.toggle('fa-bars');
+    icon.classList.toggle('fa-xmark');
+  }
+
+  // ─── SCROLL REVEAL ───
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .stagger').forEach(el => {
+    revealObserver.observe(el);
+  });
+
+  // Trigger hero reveals immediately
+  document.querySelectorAll('.hero-section .reveal').forEach(el => {
+    el.classList.add('visible');
+  });
+
+  // ─── NAVBAR SCROLL TINT ───
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 40) {
+      nav.style.background = 'rgba(11,31,58,0.95)';
+    } else {
+      nav.style.background = 'rgba(11,31,58,0.72)';
+    }
+  });
+</script>
+</body>
+</html>

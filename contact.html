@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>North Industry · Contact | Premium Pastries & Decor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --navy:   #0b1f3a;
+      --dark:   #0d2d5e;
+      --mid:    #1a4a8a;
+      --accent: #3b82f6;
+      --sky:    #60a5fa;
+      --pale:   #dbeafe;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #eef4fd;
+      color: #1a2e4a;
+      overflow-x: hidden;
+    }
+    h1,h2,h3,.serif { font-family: 'Playfair Display', serif; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #eef4fd; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(180deg,#3b82f6,#0b1f3a); border-radius: 3px; }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top:0; left:0; right:0; z-index:100;
+      background: rgba(11,31,58,0.72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      transition: background 0.3s;
+    }
+    .nav-link { color:rgba(255,255,255,0.75); font-size:0.80rem; letter-spacing:0.08em; text-transform:uppercase; font-weight:500; padding:0.25rem 0.4rem; transition:color 0.2s; position:relative; }
+    .nav-link::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:1px; background:#60a5fa; transition:width 0.25s; }
+    .nav-link:hover { color:#fff; }
+    .nav-link:hover::after { width:100%; }
+    .nav-link.active { color:#60a5fa; }
+    .nav-link.active::after { width:100%; }
+
+    /* ── HERO BG ── */
+    .hero-contact {
+      background-image:
+        linear-gradient(155deg, rgba(11,31,58,0.90) 0%, rgba(26,74,138,0.80) 55%, rgba(96,165,250,0.52) 100%),
+        url('https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=1400&q=80&fit=crop');
+      background-size: cover; background-position: center; background-attachment: fixed;
+    }
+
+    /* ── GLASS ── */
+    .glass { background:rgba(255,255,255,0.13); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,0.25); box-shadow:0 8px 32px rgba(11,31,58,0.25); }
+    .glass-white { background:rgba(255,255,255,0.72); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.55); box-shadow:0 10px 40px rgba(11,31,58,0.12); }
+    .glass-card { background:rgba(255,255,255,0.62); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border:1px solid rgba(255,255,255,0.48); box-shadow:0 10px 40px rgba(11,31,58,0.13); transition:transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s, background 0.25s; }
+    .glass-card:hover { transform:translateY(-7px) scale(1.012); background:rgba(255,255,255,0.85); box-shadow:0 22px 55px rgba(11,31,58,0.20); }
+
+    /* ── GRADIENT TEXT ── */
+    .grad-white { background:linear-gradient(120deg,#fff 0%,#bfdbfe 55%,#60a5fa 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .grad-dark  { background:linear-gradient(120deg,#0b1f3a 0%,#1a4a8a 60%,#3b82f6 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+    /* ── LINE ── */
+    .line-div { width:68px; height:3px; background:linear-gradient(90deg,#3b82f6,#60a5fa,#bfdbfe); border-radius:2px; }
+
+    /* ── PILL ── */
+    .pill { display:inline-flex; align-items:center; gap:6px; background:rgba(59,130,246,0.16); border:1px solid rgba(96,165,250,0.32); border-radius:40px; padding:0.32rem 0.95rem; font-size:0.76rem; letter-spacing:0.06em; text-transform:uppercase; color:#bfdbfe; font-weight:600; }
+
+    /* ── REVEAL ── */
+    .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.7s ease, transform 0.7s cubic-bezier(.22,1,.36,1); }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .reveal-l { opacity:0; transform:translateX(-30px); transition:opacity 0.7s ease, transform 0.7s cubic-bezier(.22,1,.36,1); }
+    .reveal-l.visible { opacity:1; transform:translateX(0); }
+    .reveal-r { opacity:0; transform:translateX(30px); transition:opacity 0.7s ease, transform 0.7s cubic-bezier(.22,1,.36,1); }
+    .reveal-r.visible { opacity:1; transform:translateX(0); }
+    .stagger > * { opacity:0; transform:translateY(22px); transition:opacity 0.5s ease, transform 0.5s cubic-bezier(.22,1,.36,1); }
+    .stagger.visible > *:nth-child(1){ opacity:1;transform:translateY(0);transition-delay:.05s; }
+    .stagger.visible > *:nth-child(2){ opacity:1;transform:translateY(0);transition-delay:.13s; }
+    .stagger.visible > *:nth-child(3){ opacity:1;transform:translateY(0);transition-delay:.21s; }
+    .stagger.visible > *:nth-child(4){ opacity:1;transform:translateY(0);transition-delay:.29s; }
+    .stagger.visible > *:nth-child(5){ opacity:1;transform:translateY(0);transition-delay:.37s; }
+    .stagger.visible > *:nth-child(6){ opacity:1;transform:translateY(0);transition-delay:.45s; }
+
+    /* ── ICON BOX ── */
+    .icon-box { display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#1a4a8a,#3b82f6); box-shadow:0 6px 18px rgba(59,130,246,0.35); flex-shrink:0; transition:transform 0.2s, box-shadow 0.2s; }
+    .glass-card:hover .icon-box { transform:rotate(-6deg) scale(1.1); box-shadow:0 10px 26px rgba(59,130,246,0.55); }
+
+    /* ── BUTTONS ── */
+    .btn-pry { display:inline-flex; align-items:center; gap:8px; background:linear-gradient(120deg,#1a4a8a,#3b82f6); color:#fff; padding:0.85rem 2rem; border-radius:50px; font-size:0.88rem; font-weight:600; letter-spacing:0.02em; box-shadow:0 6px 22px rgba(59,130,246,0.38); transition:transform 0.2s, box-shadow 0.2s, filter 0.2s; text-decoration:none; cursor:pointer; border:none; }
+    .btn-pry:hover { transform:translateY(-3px); box-shadow:0 12px 30px rgba(59,130,246,0.52); filter:brightness(1.08); }
+    .btn-ghost { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.10); color:#fff; padding:0.85rem 2rem; border-radius:50px; font-size:0.88rem; font-weight:500; border:1px solid rgba(255,255,255,0.28); transition:background 0.2s, transform 0.2s; text-decoration:none; cursor:pointer; }
+    .btn-ghost:hover { background:rgba(255,255,255,0.20); transform:translateY(-3px); }
+
+    /* ── PHONE PULSE ── */
+    .phone-glow {
+      position: relative;
+    }
+    .phone-glow::before {
+      content: '';
+      position: absolute; inset: -6px;
+      border-radius: 50px;
+      background: linear-gradient(120deg,#1a4a8a,#3b82f6);
+      opacity: 0.25;
+      animation: phonePulse 2.5s ease-in-out infinite;
+      z-index: -1;
+    }
+    @keyframes phonePulse {
+      0%,100%{ transform:scale(1); opacity:0.2; }
+      50%{ transform:scale(1.04); opacity:0.4; }
+    }
+
+    /* ── CONTACT METHOD CARD ── */
+    .method-card {
+      display:flex; align-items:flex-start; gap:14px;
+      background:rgba(255,255,255,0.55); border:1px solid rgba(255,255,255,0.55);
+      border-radius:1.2rem; padding:1.1rem 1.3rem;
+      transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+    .method-card:hover {
+      background:rgba(255,255,255,0.88);
+      transform:translateX(5px);
+      box-shadow: 0 8px 24px rgba(11,31,58,0.10);
+    }
+    .method-card:hover .icon-box { transform:rotate(-6deg) scale(1.1); }
+
+    /* ── ADDRESS BLOCK ── */
+    .addr-block {
+      background:rgba(255,255,255,0.45); border:1px solid rgba(255,255,255,0.50);
+      border-radius:1rem; padding:1rem 1.2rem;
+      transition: background 0.25s, transform 0.25s;
+    }
+    .addr-block:hover { background:rgba(255,255,255,0.82); transform:translateY(-3px); }
+
+    /* ── DARK SECTIONS ── */
+    .director-bg {
+      background-image:
+        linear-gradient(155deg, rgba(11,31,58,0.92) 0%, rgba(26,74,138,0.85) 100%),
+        url('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=1200&q=80&fit=crop');
+      background-size:cover; background-position:center;
+    }
+    .cert-bg {
+      background-image:
+        linear-gradient(145deg, rgba(11,31,58,0.90) 0%, rgba(59,130,246,0.65) 100%),
+        url('https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=1200&q=80&fit=crop');
+      background-size:cover; background-position:center;
+    }
+
+    /* ── NOISE ── */
+    .noise::before { content:''; position:absolute; inset:0; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E"); pointer-events:none; z-index:0; }
+
+    /* ── PARTICLES & RING ── */
+    .particle { position:absolute; border-radius:50%; background:rgba(96,165,250,0.65); animation:floatP 7s ease-in-out infinite; }
+    @keyframes floatP { 0%,100%{transform:translateY(0) scale(1);opacity:.5;} 50%{transform:translateY(-18px) scale(1.3);opacity:1;} }
+    .hero-ring { position:absolute; border-radius:50%; border:1px solid rgba(96,165,250,0.18); animation:pulseR 5s ease-in-out infinite; }
+    @keyframes pulseR { 0%,100%{transform:scale(1);opacity:.35;} 50%{transform:scale(1.05);opacity:.7;} }
+
+    /* ── STAT TILE ── */
+    .stat-tile { background:rgba(255,255,255,0.10); border:1px solid rgba(255,255,255,0.18); border-radius:1.2rem; padding:1.1rem; text-align:center; transition:background 0.25s, transform 0.25s; }
+    .stat-tile:hover { background:rgba(255,255,255,0.18); transform:translateY(-4px); }
+
+    /* ── INFO ROW ── */
+    .info-row { display:flex; align-items:flex-start; gap:10px; padding:0.65rem 0; border-bottom:1px solid rgba(255,255,255,0.09); font-size:0.875rem; }
+    .info-row:last-child { border-bottom:none; }
+
+    /* ── SECTION PAD ── */
+    .section { padding:5.5rem 1.5rem; }
+    @media(max-width:768px){ .section { padding:4rem 1rem; } }
+
+    /* wavy */
+    .wavy { line-height:0; overflow:hidden; }
+
+    /* mobile */
+    #mob-menu { display:none; }
+    #mob-menu.open { display:flex; }
+
+    /* bbee badge */
+    .bbee-b { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(120deg,#0b1f3a,#1a4a8a); color:#fff; border-radius:40px; padding:0.35rem 1.1rem; font-size:0.74rem; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; }
+  </style>
+</head>
+<body>
+
+
+<nav class="py-3 px-4 sm:px-8">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-3">
+      <div class="icon-box w-9 h-9 rounded-xl"><i class="fa-solid fa-cake-candles text-white text-sm"></i></div>
+      <span class="serif text-white font-bold text-lg tracking-tight">North Industry</span>
+    </a>
+    <div class="hidden md:flex items-center gap-6">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="contact.html" class="nav-link active">Contact</a>
+      <a href="tel:0793518160" class="btn-pry py-2 px-5 text-sm"><i class="fa-solid fa-phone text-xs"></i> Call Us</a>
+    </div>
+    <button class="md:hidden text-white/80 hover:text-white p-2" onclick="toggleMenu()">
+      <i class="fa-solid fa-bars text-xl" id="micon"></i>
+    </button>
+  </div>
+  <div id="mob-menu" class="md:hidden flex-col gap-1 pt-3 pb-2 px-2 border-t border-white/10 mt-2">
+    <a href="index.html" class="block nav-link py-2">Home</a>
+    <a href="about.html" class="block nav-link py-2">About</a>
+    <a href="services.html" class="block nav-link py-2">Services</a>
+    <a href="contact.html" class="block nav-link py-2 active" onclick="toggleMenu()">Contact</a>
+    <a href="tel:0793518160" class="btn-pry mt-3 text-sm w-full justify-center"><i class="fa-solid fa-phone text-xs"></i> 079 351 8160</a>
+  </div>
+</nav>
+
+
+<section class="hero-contact noise relative min-h-screen flex items-center justify-center" style="padding:7rem 1.5rem 5rem;">
+  <div class="hero-ring" style="width:500px;height:500px;left:calc(50% - 250px);top:calc(50% - 250px);"></div>
+  <div class="hero-ring" style="width:820px;height:820px;left:calc(50% - 410px);top:calc(50% - 410px);animation-delay:1.8s;opacity:.18;"></div>
+  <div class="particle" style="width:5px;height:5px;top:20%;left:10%;animation-delay:0s;"></div>
+  <div class="particle" style="width:7px;height:7px;top:68%;left:7%;animation-delay:1.4s;"></div>
+  <div class="particle" style="width:5px;height:5px;top:24%;right:12%;animation-delay:2.6s;"></div>
+  <div class="particle" style="width:8px;height:8px;top:74%;right:9%;animation-delay:0.9s;"></div>
+
+  <div class="relative z-10 max-w-5xl mx-auto text-center px-4">
+    <div class="pill mb-6 reveal" style="transition-delay:.1s;">
+      <span class="w-2 h-2 rounded-full bg-sky-400 inline-block animate-pulse"></span>
+      Get in Touch · North Industry
+    </div>
+    <h1 class="reveal serif font-black leading-none mb-5" style="font-size:clamp(3rem,9vw,6.5rem);transition-delay:.2s;">
+      <span class="text-white block">Let's</span>
+      <span class="grad-white block italic" style="font-size:clamp(2.6rem,8vw,6rem);">Connect</span>
+    </h1>
+    <p class="reveal text-blue-100/85 text-lg sm:text-xl max-w-2xl mx-auto font-light leading-relaxed mb-10" style="transition-delay:.35s;">
+      We're here to bring your vision to life — reach out for pastries, décor, or a custom quote. Free initial consultations available.
+    </p>
+
+    <!-- big phone CTA -->
+    <div class="reveal flex flex-col sm:flex-row gap-4 justify-center items-center" style="transition-delay:.5s;">
+      <a href="tel:0793518160" class="btn-pry text-xl px-10 py-5 phone-glow">
+        <i class="fa-solid fa-phone-volume"></i> 079 351 8160
+      </a>
+    </div>
+
+    <!-- quick info tiles -->
+    <div class="reveal mt-14 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto" style="transition-delay:.65s;">
+      <div class="glass rounded-2xl p-3 text-center">
+        <i class="fa-regular fa-clock text-sky-400 text-lg mb-1 block"></i>
+        <p class="text-white text-xs font-semibold">Mon – Fri</p>
+        <p class="text-blue-200/60 text-xs">8am – 5pm</p>
+      </div>
+      <div class="glass rounded-2xl p-3 text-center">
+        <i class="fa-solid fa-location-dot text-sky-400 text-lg mb-1 block"></i>
+        <p class="text-white text-xs font-semibold">Northern Cape</p>
+        <p class="text-blue-200/60 text-xs">Nationwide</p>
+      </div>
+      <div class="glass rounded-2xl p-3 text-center">
+        <i class="fa-solid fa-medal text-sky-400 text-lg mb-1 block"></i>
+        <p class="text-white text-xs font-semibold">B-BBEE Level 1</p>
+        <p class="text-blue-200/60 text-xs">135% Recognition</p>
+      </div>
+      <div class="glass rounded-2xl p-3 text-center">
+        <i class="fa-regular fa-comment text-sky-400 text-lg mb-1 block"></i>
+        <p class="text-white text-xs font-semibold">Free Quote</p>
+        <p class="text-blue-200/60 text-xs">Consultation</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wavy" style="background:#eef4fd;">
+  <svg viewBox="0 0 1200 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;height:60px;">
+    <path d="M0,30 C300,60 900,0 1200,30 L1200,60 L0,60 Z" fill="#eef4fd"/>
+    <path d="M0,30 C300,60 900,0 1200,30" fill="none" stroke="rgba(59,130,246,0.13)" stroke-width="2"/>
+  </svg>
+</div>
+
+
+<!-- ═══════════════════════════
+     MAIN CONTACT DETAILS
+═══════════════════════════ -->
+<section class="section max-w-7xl mx-auto" id="details">
+  <div class="text-center mb-12 reveal">
+    <div class="line-div mx-auto mb-5"></div>
+    <h2 class="serif text-4xl sm:text-5xl font-black grad-dark mb-4">Contact Details</h2>
+    <p class="text-gray-500 text-base max-w-md mx-auto">Every way to reach us — direct line, addresses, and registration details.</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+    <!-- left-large: contact methods -->
+    <div class="lg:col-span-2 space-y-5 reveal-l">
+
+      <!-- PHONE — hero prominence -->
+      <div class="glass-card rounded-3xl p-7" style="background:linear-gradient(135deg,rgba(11,31,58,0.92),rgba(26,74,138,0.85));border-color:rgba(96,165,250,0.22);">
+        <p class="text-blue-300/60 text-xs uppercase tracking-widest font-bold mb-3">Direct Line · Call / WhatsApp</p>
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
+          <a href="tel:0793518160" class="serif text-5xl sm:text-6xl font-black text-white hover:text-sky-300 transition-colors tracking-tight">
+            079 351 8160
+          </a>
+          <div class="flex flex-wrap gap-2">
+            <span class="glass rounded-full px-4 py-2 text-white/80 text-xs flex items-center gap-2">
+              <i class="fa-regular fa-clock text-sky-400"></i> Mon–Fri 8am–5pm
+            </span>
+            <span class="glass rounded-full px-4 py-2 text-white/80 text-xs flex items-center gap-2">
+              <i class="fa-solid fa-calendar-days text-sky-400"></i> Event line
+            </span>
+          </div>
+        </div>
+        <div class="mt-5 flex gap-3">
+          <a href="tel:0793518160" class="btn-pry flex-1 justify-center text-sm py-3">
+            <i class="fa-solid fa-phone text-xs"></i> Call Now
+          </a>
+          <a href="tel:0793518160" class="btn-ghost flex-1 justify-center text-sm py-3">
+            <i class="fa-brands fa-whatsapp text-xs"></i> WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- 4 address / detail cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 stagger">
+
+        <div class="method-card">
+          <div class="icon-box w-11 h-11 rounded-xl"><i class="fa-regular fa-envelope text-white text-sm"></i></div>
+          <div>
+            <p class="font-bold text-sky-900 text-sm mb-1">Postal Address</p>
+            <p class="text-gray-600 text-xs leading-relaxed">15 Trichard Oord<br>Westergloor, Randfontein<br>Gauteng, 1759</p>
+            <p class="text-blue-400/70 text-xs mt-1 italic">Director's postal address</p>
+          </div>
+        </div>
+
+        <div class="method-card">
+          <div class="icon-box w-11 h-11 rounded-xl"><i class="fa-solid fa-location-dot text-white text-sm"></i></div>
+          <div>
+            <p class="font-bold text-sky-900 text-sm mb-1">Registered Office</p>
+            <p class="text-gray-600 text-xs leading-relaxed">House No. 1411 Deben<br>Deben, Northern Cape<br>8463</p>
+            <p class="text-blue-400/70 text-xs mt-1 italic">Physical &amp; registered</p>
+          </div>
+        </div>
+
+        <div class="method-card">
+          <div class="icon-box w-11 h-11 rounded-xl"><i class="fa-regular fa-file-lines text-white text-sm"></i></div>
+          <div>
+            <p class="font-bold text-sky-900 text-sm mb-1">Company Registration</p>
+            <p class="text-gray-700 text-xs font-mono font-semibold">2023/790630/07</p>
+            <p class="text-gray-600 text-xs mt-0.5">Tax Nr: 9041729303</p>
+            <p class="text-gray-600 text-xs">Financial year end: February</p>
+          </div>
+        </div>
+
+        <div class="method-card">
+          <div class="icon-box w-11 h-11 rounded-xl"><i class="fa-solid fa-building-columns text-white text-sm"></i></div>
+          <div>
+            <p class="font-bold text-sky-900 text-sm mb-1">CIPC Contact Centre</p>
+            <p class="text-gray-600 text-xs">086 100 2472 (local)</p>
+            <p class="text-gray-600 text-xs">+27 12 394 9573 (int'l)</p>
+            <a href="https://www.cipc.co.za" target="_blank" class="text-blue-500 text-xs hover:text-blue-700 transition-colors mt-0.5 block">www.cipc.co.za</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CIPC addresses strip -->
+      <div class="glass-white rounded-2xl p-5 text-xs text-gray-500">
+        <p class="font-semibold text-sky-800 mb-2 text-sm"><i class="fa-regular fa-building text-blue-500 mr-2"></i>CIPC Registered Addresses</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <div class="addr-block">
+            <p class="text-blue-500/80 uppercase tracking-wider text-xs mb-1">Physical</p>
+            <p>dti Campus - Block F, 77 Meintjes Street, Sunnyside 0001</p>
+          </div>
+          <div class="addr-block">
+            <p class="text-blue-500/80 uppercase tracking-wider text-xs mb-1">Postal</p>
+            <p>Companies, P O Box 429, Pretoria 0001</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- right: director + BBEE + enterprise -->
+    <div class="space-y-5 reveal-r">
+
+      <!-- director card -->
+      <div class="glass-card rounded-3xl p-7">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="icon-box w-12 h-12 rounded-xl"><i class="fa-regular fa-user text-white"></i></div>
+          <div>
+            <p class="text-blue-500/80 text-xs uppercase tracking-widest font-bold">Director</p>
+            <h3 class="serif text-xl font-black" style="color:#0b1f3a;">Saina Titus</h3>
+          </div>
+        </div>
+        <div class="space-y-0">
+          <div class="info-row text-sm" style="border-color:rgba(11,31,58,0.07);">
+            <i class="fa-solid fa-id-card text-blue-400 w-4 flex-shrink-0"></i>
+            <span class="text-gray-400 text-xs w-16 flex-shrink-0">ID No.</span>
+            <span class="font-mono font-semibold text-gray-800 text-xs">6807140484086</span>
+          </div>
+          <div class="info-row text-sm" style="border-color:rgba(11,31,58,0.07);">
+            <i class="fa-regular fa-calendar text-blue-400 w-4 flex-shrink-0"></i>
+            <span class="text-gray-400 text-xs w-16 flex-shrink-0">Appointed</span>
+            <span class="font-medium text-gray-800 text-xs">02 June 2023</span>
+          </div>
+          <div class="info-row text-sm" style="border-color:rgba(11,31,58,0.07);">
+            <i class="fa-regular fa-location-dot text-blue-400 w-4 flex-shrink-0"></i>
+            <span class="text-gray-400 text-xs w-16 flex-shrink-0">Postal</span>
+            <span class="text-gray-700 text-xs">15 Trichard Oord, Westergloor, Randfontein, 1759</span>
+          </div>
+        </div>
+        <div class="mt-4 flex flex-wrap gap-2">
+          <span class="glass-white rounded-full px-3 py-1 text-xs font-medium flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span> 100% Black Female
+          </span>
+          <span class="glass-white rounded-full px-3 py-1 text-xs font-medium">100% Owner</span>
+        </div>
+      </div>
+
+      <!-- B-BBEE compact -->
+      <div class="glass-card rounded-3xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-medal text-blue-500 text-xl"></i>
+            <h4 class="font-bold text-sky-900">B-BBEE Level 1</h4>
+          </div>
+          <span class="bbee-b"><i class="fa-solid fa-star text-amber-300 text-xs"></i> 135%</span>
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-xs mb-3">
+          <div class="addr-block text-center">
+            <p class="text-gray-400 mb-0.5">Black Owned</p>
+            <p class="font-black text-sky-900 text-base">100%</p>
+          </div>
+          <div class="addr-block text-center">
+            <p class="text-gray-400 mb-0.5">Black Female</p>
+            <p class="font-black text-sky-900 text-base">100%</p>
+          </div>
+        </div>
+        <div class="glass-white rounded-xl p-3 text-xs">
+          <div class="flex justify-between mb-1">
+            <span class="text-gray-500">Certificate</span>
+            <span class="font-mono font-semibold">9442917900</span>
+          </div>
+          <div class="flex justify-between mb-1">
+            <span class="text-gray-500">Issued</span>
+            <span class="font-medium">02/09/2025</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-500">Expires</span>
+            <span class="font-medium text-emerald-600 flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse inline-block"></span>
+              01/09/2026
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- enterprise status -->
+      <div class="glass-white rounded-2xl p-5 text-sm">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse inline-block"></span>
+          <span class="font-bold text-sky-900">In Business · Private Company</span>
+        </div>
+        <p class="text-gray-500 text-xs">Registration: 02/06/2023</p>
+        <p class="text-gray-500 text-xs">Financial year end: February</p>
+        <p class="text-gray-500 text-xs mt-1 font-mono">2023/790630/07</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════
+     LET'S CREATE TOGETHER (dark)
+═══════════════════════════ -->
+<section class="director-bg noise relative section" id="together">
+  <div class="relative z-10 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+      <!-- left: CTA text -->
+      <div class="reveal-l">
+        <div class="line-div mb-5"></div>
+        <h2 class="serif text-4xl sm:text-5xl font-black text-white leading-tight mb-5">
+          Let's Create<br>
+          <span class="grad-white italic">Something Beautiful</span>
+        </h2>
+        <p class="text-blue-100/80 text-lg leading-relaxed mb-8">
+          Whether you need a custom cake, full event decoration, or a dessert table for a corporate function — we're ready to bring your ideas to life. We offer free initial consultations.
+        </p>
+
+        <!-- service chips -->
+        <div class="flex flex-wrap gap-3 mb-8">
+          <span class="glass rounded-full px-5 py-2.5 text-white/90 text-sm flex items-center gap-2">
+            <i class="fa-solid fa-cake-candles text-sky-400 text-xs"></i> Pastries
+          </span>
+          <span class="glass rounded-full px-5 py-2.5 text-white/90 text-sm flex items-center gap-2">
+            <i class="fa-solid fa-wand-magic-sparkles text-sky-400 text-xs"></i> Décor
+          </span>
+          <span class="glass rounded-full px-5 py-2.5 text-white/90 text-sm flex items-center gap-2">
+            <i class="fa-solid fa-champagne-glasses text-sky-400 text-xs"></i> Event Styling
+          </span>
+          <span class="glass rounded-full px-5 py-2.5 text-white/90 text-sm flex items-center gap-2">
+            <i class="fa-solid fa-building text-sky-400 text-xs"></i> Corporate
+          </span>
+        </div>
+
+        <blockquote class="border-l-4 border-blue-400/60 pl-5 italic text-blue-100/75 text-base leading-relaxed">
+          "We combine craftsmanship, creativity, and attention to detail to produce pastries that are not only delicious but also beautifully presented."
+        </blockquote>
+      </div>
+
+      <!-- right: quick reference -->
+      <div class="reveal-r">
+        <div class="glass rounded-3xl p-8">
+          <h3 class="serif text-2xl font-bold text-white mb-6">Quick Reference</h3>
+          <div class="space-y-3 stagger">
+
+            <div class="glass rounded-xl p-4 flex items-start gap-4">
+              <div class="icon-box w-10 h-10 rounded-xl flex-shrink-0" style="background:linear-gradient(135deg,rgba(255,255,255,0.15),rgba(255,255,255,0.08));border:1px solid rgba(255,255,255,0.2);box-shadow:none;">
+                <i class="fa-solid fa-location-dot text-white text-sm"></i>
+              </div>
+              <div>
+                <p class="text-blue-200/60 text-xs uppercase tracking-wider mb-0.5">Registered Office</p>
+                <p class="text-white text-sm font-medium">House 1411 Deben, Deben, Northern Cape, 8463</p>
+              </div>
+            </div>
+
+            <div class="glass rounded-xl p-4 flex items-start gap-4">
+              <div class="icon-box w-10 h-10 rounded-xl flex-shrink-0" style="background:linear-gradient(135deg,rgba(255,255,255,0.15),rgba(255,255,255,0.08));border:1px solid rgba(255,255,255,0.2);box-shadow:none;">
+                <i class="fa-regular fa-envelope text-white text-sm"></i>
+              </div>
+              <div>
+                <p class="text-blue-200/60 text-xs uppercase tracking-wider mb-0.5">Postal (Director)</p>
+                <p class="text-white text-sm font-medium">15 Trichard Oord, Westergloor, Randfontein, 1759</p>
+              </div>
+            </div>
+
+            <div class="glass rounded-xl p-4 flex items-start gap-4">
+              <div class="icon-box w-10 h-10 rounded-xl flex-shrink-0" style="background:linear-gradient(135deg,rgba(255,255,255,0.15),rgba(255,255,255,0.08));border:1px solid rgba(255,255,255,0.2);box-shadow:none;">
+                <i class="fa-solid fa-building-columns text-white text-sm"></i>
+              </div>
+              <div>
+                <p class="text-blue-200/60 text-xs uppercase tracking-wider mb-0.5">CIPC Postal</p>
+                <p class="text-white text-sm font-medium">P O Box 429, Pretoria 0001</p>
+              </div>
+            </div>
+
+            <div class="glass rounded-xl p-4 flex items-start gap-4">
+              <div class="icon-box w-10 h-10 rounded-xl flex-shrink-0" style="background:linear-gradient(135deg,rgba(255,255,255,0.15),rgba(255,255,255,0.08));border:1px solid rgba(255,255,255,0.2);box-shadow:none;">
+                <i class="fa-solid fa-globe text-white text-sm"></i>
+              </div>
+              <div>
+                <p class="text-blue-200/60 text-xs uppercase tracking-wider mb-0.5">CIPC Web &amp; Phone</p>
+                <p class="text-white text-sm font-medium">www.cipc.co.za · 086 100 2472</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wavy" style="background:#eef4fd;">
+  <svg viewBox="0 0 1200 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;height:60px;">
+    <path d="M0,30 C300,60 900,0 1200,30 L1200,60 L0,60 Z" fill="#eef4fd"/>
+    <path d="M0,30 C300,60 900,0 1200,30" fill="none" stroke="rgba(59,130,246,0.13)" stroke-width="2"/>
+  </svg>
+</div>
+
+
+<!-- ═══════════════════════════
+     ADDRESSES (EXACT FROM CERT)
+═══════════════════════════ -->
+<section class="section max-w-7xl mx-auto" id="addresses" style="padding-top:3rem;padding-bottom:3rem;">
+  <div class="reveal mb-10">
+    <div class="line-div mb-5"></div>
+    <h2 class="serif text-3xl sm:text-4xl font-black grad-dark mb-2">Registered &amp; Postal Addresses</h2>
+    <p class="text-gray-500 text-sm">Exact addresses as per CIPC certificate.</p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger">
+
+    <div class="glass-card rounded-2xl p-6">
+      <p class="text-blue-500/80 text-xs uppercase tracking-widest font-bold mb-3">Company Postal Address</p>
+      <div class="icon-box w-10 h-10 rounded-xl mb-3"><i class="fa-regular fa-envelope text-white text-sm"></i></div>
+      <p class="font-mono text-sm leading-relaxed text-gray-700">
+        HOUSE NO 1411 DEBEN<br>DEBEN<br>NORTHERN CAPE 8463
+      </p>
+    </div>
+
+    <div class="glass-card rounded-2xl p-6">
+      <p class="text-blue-500/80 text-xs uppercase tracking-widest font-bold mb-3">Registered Office Address</p>
+      <div class="icon-box w-10 h-10 rounded-xl mb-3"><i class="fa-solid fa-location-dot text-white text-sm"></i></div>
+      <p class="font-mono text-sm leading-relaxed text-gray-700">
+        HOUSE NO 1411 DEBEN<br>DEBEN<br>NORTHERN CAPE 8463
+      </p>
+    </div>
+
+    <div class="glass-card rounded-2xl p-6 sm:col-span-2 lg:col-span-1">
+      <p class="text-blue-500/80 text-xs uppercase tracking-widest font-bold mb-3">Director — Postal &amp; Residential</p>
+      <div class="icon-box w-10 h-10 rounded-xl mb-3"><i class="fa-regular fa-user text-white text-sm"></i></div>
+      <p class="text-xs text-gray-400 mb-1">TITUS, SAINA</p>
+      <p class="font-mono text-sm leading-relaxed text-gray-700">
+        15 TRICHARD OORD<br>WESTERGLOOR, RANDFONTEIN<br>GAUTENG, 1759
+      </p>
+      <p class="text-xs text-blue-400/70 mt-2 italic">Both postal &amp; residential identical</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════
+     B-BBEE CERT DETAIL
+═══════════════════════════ -->
+<section class="cert-bg noise relative section" id="certificate">
+  <div class="relative z-10 max-w-7xl mx-auto">
+    <div class="text-center mb-10 reveal">
+      <div class="line-div mx-auto mb-5"></div>
+      <h2 class="serif text-4xl font-black text-white mb-3">B-BBEE Certificate Detail</h2>
+      <p class="text-blue-100/70 text-sm">EME exemption · certificate 9442917900</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+      <!-- cert data -->
+      <div class="glass rounded-3xl p-8 reveal-l">
+        <div class="flex items-center justify-between mb-6">
+          <span class="bbee-b"><i class="fa-solid fa-medal text-amber-300"></i> Level 1 · EME</span>
+          <span class="text-white/50 text-xs font-mono">No. 9442917900</span>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+          <div class="stat-tile">
+            <p class="text-xl font-black text-white serif">02/09</p>
+            <p class="text-xs text-blue-200/65 mt-1">Issued 2025</p>
+          </div>
+          <div class="stat-tile">
+            <p class="text-xl font-black text-white serif">01/09</p>
+            <p class="text-xs text-blue-200/65 mt-1">Expires 2026</p>
+          </div>
+          <div class="stat-tile">
+            <p class="text-xl font-black text-white serif">1</p>
+            <p class="text-xs text-blue-200/65 mt-1">Black Shareholder</p>
+          </div>
+          <div class="stat-tile">
+            <p class="text-xl font-black text-white serif">135%</p>
+            <p class="text-xs text-blue-200/65 mt-1">Procurement</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3 text-xs">
+          <div class="glass rounded-xl p-3">
+            <p class="text-blue-200/55 mb-0.5">Black ownership</p>
+            <p class="text-white font-bold text-lg">100%</p>
+          </div>
+          <div class="glass rounded-xl p-3">
+            <p class="text-blue-200/55 mb-0.5">Black female</p>
+            <p class="text-white font-bold text-lg">100%</p>
+          </div>
+          <div class="glass rounded-xl p-3">
+            <p class="text-blue-200/55 mb-0.5">White ownership</p>
+            <p class="text-white font-bold text-lg">0%</p>
+          </div>
+          <div class="glass rounded-xl p-3">
+            <p class="text-blue-200/55 mb-0.5">Revenue ≤</p>
+            <p class="text-white font-bold text-lg">R10M</p>
+          </div>
+          <div class="glass rounded-xl p-3">
+            <p class="text-blue-200/55 mb-0.5">Youth</p>
+            <p class="text-white font-bold text-lg">0%</p>
+          </div>
+          <div class="glass rounded-xl p-3">
+            <p class="text-blue-200/55 mb-0.5">Disabled / Rural / Vet</p>
+            <p class="text-white font-bold text-lg">0%</p>
+          </div>
+        </div>
+        <p class="text-xs text-blue-200/35 mt-5">* CIPC affidavit, annual total revenue R10,000,000 or less.</p>
+      </div>
+
+      <!-- right: big CTA -->
+      <div class="reveal-r flex flex-col gap-5">
+        <div class="glass rounded-3xl p-8 text-center">
+          <i class="fa-solid fa-phone-volume text-white text-4xl mb-4 block"></i>
+          <p class="text-blue-200/70 text-xs uppercase tracking-widest mb-2">Call us directly</p>
+          <a href="tel:0793518160" class="serif text-5xl font-black text-white block hover:text-sky-300 transition-colors mb-5">
+            079 351 8160
+          </a>
+          <a href="tel:0793518160" class="btn-pry w-full justify-center text-base py-4">
+            <i class="fa-solid fa-phone"></i> Call Now — Free Consultation
+          </a>
+        </div>
+
+        <div class="glass rounded-2xl p-6 text-center">
+          <p class="text-blue-200/60 text-xs uppercase tracking-widest mb-3">Company Registration</p>
+          <p class="font-mono text-white font-bold text-lg">2023/790630/07</p>
+          <p class="text-blue-200/55 text-xs mt-1">Tax: 9041729303 · Fin. year end: February</p>
+          <hr class="border-white/10 my-3">
+          <p class="text-blue-200/55 text-xs">Est. 02/06/2023 · Private Company · In Business</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════
+     FOOTER
+═══════════════════════════ -->
+<footer style="background:#0b1f3a;">
+  <div class="max-w-7xl mx-auto px-6 py-10">
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-6">
+      <div class="flex items-center gap-3">
+        <div class="icon-box w-10 h-10 rounded-xl"><i class="fa-solid fa-cake-candles text-white text-sm"></i></div>
+        <div>
+          <p class="serif font-bold text-white text-lg">North Industry</p>
+          <p class="text-blue-400/65 text-xs">Premium Pastries &amp; Decorative Services</p>
+        </div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-4 text-xs" style="color:rgba(147,197,253,0.55);">
+        <span>2023/790630/07</span>
+        <span class="hidden sm:inline" style="color:rgba(59,130,246,0.3);">|</span>
+        <span>Tax: 9041729303</span>
+        <span class="hidden sm:inline" style="color:rgba(59,130,246,0.3);">|</span>
+        <span>B-BBEE EME Level 1</span>
+        <span class="hidden sm:inline" style="color:rgba(59,130,246,0.3);">|</span>
+        <a href="https://www.cipc.co.za" target="_blank" class="hover:text-blue-300 transition-colors">www.cipc.co.za</a>
+      </div>
+    </div>
+    <hr style="border-color:rgba(59,130,246,0.10);margin:1.5rem 0 1rem;">
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-3 text-xs" style="color:rgba(147,197,253,0.35);">
+      <p>Physical: dti Campus - Block F, 77 Meintjes St, Sunnyside, Pretoria</p>
+      <p>Postal: P O Box 429, Pretoria 0001 · 086 100 2472</p>
+    </div>
+    <p class="text-center mt-4 tracking-widest text-xs" style="color:rgba(59,130,246,0.18);">NORTH INDUSTRY · CONTACT PAGE · NORTH INDUSTRY (PTY) LTD</p>
+  </div>
+</footer>
+
+
+<script>
+  function toggleMenu() {
+    const m = document.getElementById('mob-menu');
+    const i = document.getElementById('micon');
+    m.classList.toggle('open');
+    i.classList.toggle('fa-bars');
+    i.classList.toggle('fa-xmark');
+  }
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.10 });
+  document.querySelectorAll('.reveal,.reveal-l,.reveal-r,.stagger').forEach(el => obs.observe(el));
+
+  document.querySelectorAll('.hero-contact .reveal').forEach(el => el.classList.add('visible'));
+
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.background =
+      window.scrollY > 40 ? 'rgba(11,31,58,0.96)' : 'rgba(11,31,58,0.72)';
+  });
+</script>
+</body>
+</html>
